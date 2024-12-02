@@ -1,0 +1,44 @@
+# LIST USER REPOSITORIES -----------------------------------------------------------------------------------------------
+# https://docs.github.com/en/rest/repos/repos?apiVersion=2022-11-28#list-repositories-for-a-user
+
+###
+# List repositories for a user (default only owned repositories, not member)
+GET https://api.github.com/users/{{username}}/repos
+Accept: application/vnd.github+json
+
+###
+# List repositores for a user using given relationship (all, owner, member)
+GET https://api.github.com/users/{{username}}/repos?type={{repositories_relationship}}
+Accept: application/vnd.github+json
+
+
+
+
+# LIST USER COMMITS IN REPOSITORY --------------------------------------------------------------------------------------
+# https://docs.github.com/en/rest/commits/commits?apiVersion=2022-11-28#list-commits
+
+###
+# List ALL commits in a repository, is paginated (default page 1, per_page 30)
+GET https://api.github.com/repos/{{sample_repository_owner}}/{{sample_repository_name}}/commits?page=1&per_page=100
+Accept: application/vnd.github+json
+
+###
+# List users commits in a repository (author, commiter or at least one of them)
+GET https://api.github.com/repos/{{sample_repository_owner}}/{{sample_repository_name}}/commits?page=1&per_page=100&author={{username}}&commiter={{username}}
+Accept: application/vnd.github+json
+
+
+
+
+# GET COMMIT CONTENTS --------------------------------------------------------------------------------------------------
+# https://docs.github.com/en/rest/commits/commits?apiVersion=2022-11-28#get-a-commit
+
+###
+# Get a single commit from a repository based on ref (commit sha, branch or tag)
+# Changes described in "patch" response variable
+GET https://api.github.com/repos/{{sample_repository_owner}}/{{sample_repository_name}}/commits/{{sample_commit_ref}}
+Accept: application/vnd.github+json
+
+###
+# Get a single file from a given commit (does not show changes in commit, but ALL file content in given commit)
+GET https://github.com/{{sample_repository_owner}}/{{sample_repository_name}}/raw/{{sample_commit_ref}}/{{sample_commit_filename}}
