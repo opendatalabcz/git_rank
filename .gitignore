@@ -3,3 +3,4 @@
 
 # Requests private env files
 requests/*private*
+requests/.env
