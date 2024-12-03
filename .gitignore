@@ -1,6 +1,13 @@
 # IntelliJ IDEA files
 .idea
 
-# Requests private env files
-requests/*private*
-requests/.env
+# Private env files
+.env
+api_requests/*private*
+api_requests/.env
+
+# Storage directory for cloned repositories
+storage
+
+# Python virtual environment directory
+.venv
