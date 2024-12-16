@@ -1,6 +1,7 @@
 import os
 import sys
 from enum import Enum
+from typing import Counter
 from git import Repo
 
 import requests
@@ -50,6 +51,7 @@ def clone_user_repositories(username: str):
     for repository in repositories:
         cloned_repositories.append(Repo.clone_from(repository["url"], os.path.join(STORAGE_DIR, repository["name"])))
     
+    file_types = Counter()
     for cloned_repository in cloned_repositories:
         commits = cloned_repository.iter_commits()
         for commit in commits:
@@ -58,8 +60,12 @@ def clone_user_repositories(username: str):
             for file in changed_files:
                 try:
                     print(f"File {file} changes: {commit.tree[file].data_stream.read(10).decode('utf8')}")
+                    file_types.update([os.path.splitext(file)[1]])
                 except KeyError:
                     print(f"File {file} was removed in this commit.")
+
+    print("-----------SUMMARY-----------")
+    print(file_types.most_common())
 
 if __name__ == "__main__":
     clone_user_repositories(sys.argv[1])
