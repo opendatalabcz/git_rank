@@ -46,8 +46,20 @@ def get_repositories(username: str, relationship: RepositoriesRelationship):
 
 def clone_user_repositories(username: str):
     repositories = get_repositories(username=username, relationship=RepositoriesRelationship.OWNER)
+    cloned_repositories: list[Repo] = []
     for repository in repositories:
-        Repo.clone_from(repository["url"], os.path.join(STORAGE_DIR, repository["name"]))
+        cloned_repositories.append(Repo.clone_from(repository["url"], os.path.join(STORAGE_DIR, repository["name"])))
+    
+    for cloned_repository in cloned_repositories:
+        commits = cloned_repository.iter_commits()
+        for commit in commits:
+            changed_files = list(commit.stats.files.keys())
+            print(f"Commit {commit} from {commit.author.name} <{commit.author.email}> contains changes in files: {changed_files}")
+            for file in changed_files:
+                try:
+                    print(f"File {file} changes: {commit.tree[file].data_stream.read(10).decode('utf8')}")
+                except KeyError:
+                    print(f"File {file} was removed in this commit.")
 
 if __name__ == "__main__":
     clone_user_repositories(sys.argv[1])
