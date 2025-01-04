@@ -16,14 +16,19 @@ homepage = "https://github.com/opendatalabcz/git_rank"
 
 [tool.poetry.dependencies]
 python = "^3.9"
+fastapi = "^0.115.6"
+typer = "^0.15.1"
+structlog = "^24.4.0"
+uvicorn = "^0.34.0"
+dependency-injector = "^4.44.0"
 
 [tool.poetry.dev-dependencies]
 bandit = "^1.7.1"
-black = {version = "^22.3.0", allow-prereleases = true}
+black = {version = "^24.3.0", allow-prereleases = true}
 darglint = "^1.8.1"
 isort = {extras = ["colors"], version = "^5.10.1"}
-mypy = "^0.910"
-mypy-extensions = "^0.4.3"
+mypy = "^1.11.2"
+mypy-extensions = "^1.0.0"
 pre-commit = "^2.15.0"
 pydocstyle = "^6.1.1"
 pylint = "^2.11.1"
