@@ -33,3 +33,8 @@ logging:
     propagate: True
 
   logger_levels:
+
+auth:
+  github:
+    access_token: "${GITHUB_ACCESS_TOKEN}"
+    
