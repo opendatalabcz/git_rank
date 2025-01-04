@@ -11,3 +11,17 @@ storage
 
 # Python virtual environment directory
 .venv
+
+# Unit test / coverage 
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+.pytest_cache/
+__pycache__
