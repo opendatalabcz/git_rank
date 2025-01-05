@@ -45,6 +45,7 @@ Pro spuštění je potřeba mít definované následující proměnné prostřed
 | :------- | :------ |
 | SERVER_HOST | localhost |
 | SERVER_PORT | 8090      |
+| GITHUB_ACCESS_TOKEN | ghp_xyz |
 
 ## Template
 

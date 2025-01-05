@@ -13,6 +13,8 @@ class RankingOrchestrator:
         log = logger.bind(username=username)
         log.debug("rank_user.start")
 
-        self.repository_cloner.clone_repositories(username)
+        local_repositories = self.repository_cloner.clone_repositories(username)
+
+        # TODO process local repositories
 
         log.debug("rank_user.end")

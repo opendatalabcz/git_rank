@@ -34,7 +34,10 @@ logging:
 
   logger_levels:
 
-auth:
+git_remote:
   github:
     access_token: "${GITHUB_ACCESS_TOKEN}"
+    api_url: "https://api.github.com"
+    user_repo_relation: "owner" # all, member, owner
+    results_per_page: 100
     

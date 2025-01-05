@@ -3,6 +3,8 @@ from importlib import metadata as importlib_metadata
 
 PACKAGE_DIR = os.path.dirname(__file__)
 ROOT_DIR = os.path.join(PACKAGE_DIR, "..")
+STORAGE_DIR = os.path.join(ROOT_DIR, "storage")
+
 CONFIG_NAME = "config.yml"
 CONFIG_PATH = os.path.join(ROOT_DIR, "config", CONFIG_NAME)
 
