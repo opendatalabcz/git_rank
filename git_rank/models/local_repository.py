@@ -1,8 +1,10 @@
 from dataclasses import dataclass
 
+from git import Repo
+
 
 @dataclass
-class RemoteRepository:
-    clone_url: str
+class LocalRepository:
+    repository: Repo
     full_name: str
     username: str

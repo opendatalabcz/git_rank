@@ -4,7 +4,9 @@ import requests
 from structlog import get_logger
 
 from git_rank.models.remote_repository import RemoteRepository
-from git_rank.services.git.abstract_git_service import AbstractGitService
+from git_rank.repositories.git_remote.abstract_git_remote_repository import (
+    AbstractGitRemoteRepository,
+)
 
 logger = get_logger()
 
@@ -16,7 +18,7 @@ class GithubConfig(TypedDict):
     results_per_page: int
 
 
-class GithubService(AbstractGitService):
+class GithubRemoteRepository(AbstractGitRemoteRepository):
 
     def __init__(self, github_config: GithubConfig) -> None:
         self.access_token = github_config["access_token"]
@@ -63,6 +65,7 @@ class GithubService(AbstractGitService):
                     lambda remote_repository: RemoteRepository(
                         clone_url=remote_repository["clone_url"],
                         full_name=remote_repository["full_name"],
+                        username=username,
                     ),
                     repositories_page_json,
                 )
