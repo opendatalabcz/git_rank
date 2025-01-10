@@ -15,7 +15,7 @@ homepage = "https://github.com/opendatalabcz/git_rank"
 
 
 [tool.poetry.dependencies]
-python = "^3.9"
+python = "^3.11"
 fastapi = "^0.115.6"
 typer = "^0.15.1"
 structlog = "^24.4.0"
@@ -24,7 +24,7 @@ dependency-injector = "^4.44.0"
 gitpython = "^3.1.44"
 requests = "^2.32.3"
 
-[tool.poetry.dev-dependencies]
+[tool.poetry.group.dev.dependencies]
 bandit = "^1.7.1"
 black = {version = "^24.3.0", allow-prereleases = true}
 darglint = "^1.8.1"
@@ -43,7 +43,7 @@ pytest-cov = "^3.0.0"
 
 [tool.black]
 # https://github.com/psf/black
-target-version = ["py39"]
+target-version = ["py311"]
 line-length = 88
 color = true
 
@@ -65,7 +65,7 @@ exclude = '''
 
 [tool.isort]
 # https://github.com/timothycrosley/isort/
-py_version = 39
+py_version = 311
 line_length = 88
 
 known_typing = ["typing", "types", "typing_extensions", "mypy", "mypy_extensions"]
@@ -78,7 +78,7 @@ color_output = true
 
 [tool.mypy]
 # https://mypy.readthedocs.io/en/latest/config_file.html#using-a-pyproject-toml-file
-python_version = 3.9
+python_version = 3.11
 pretty = true
 show_traceback = true
 color_output = true

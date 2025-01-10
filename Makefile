@@ -25,7 +25,8 @@ init:
 
 .PHONY: install
 install:
-	poetry install
+	poetry install -n
+	-poetry run mypy --install-types --non-interactive ./
 
 .PHONY: pre-commit-install
 pre-commit-install:
