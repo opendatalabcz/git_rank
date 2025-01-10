@@ -48,7 +48,6 @@ def init_logging(config):
             structlog.stdlib.PositionalArgumentsFormatter(),
             timestamper,
             structlog.processors.StackInfoRenderer(),
-            structlog.processors.format_exc_info,
             structlog.stdlib.ProcessorFormatter.wrap_for_formatter,
         ],
         logger_factory=structlog.stdlib.LoggerFactory(),

@@ -21,11 +21,11 @@ def rank_user(
     ),
 ) -> None:
     log = logger.bind(username=username)
-    log.info("rank_user.start")
+    log.info("Started ranking user")
 
     ranking_orchestrator.rank_user(username)
 
-    log.info("rank_user.end")
+    log.info("Ended ranking user")
 
 
 @router.get("/status")
