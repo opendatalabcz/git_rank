@@ -26,6 +26,7 @@ class RankingOrchestratorContainer(containers.DeclarativeContainer):
     statistics_analyzer = providers.Factory(
         StatisticsAnalyzer,
         git_local_service=service_container.git_local_service,
+        linter_service=service_container.linter_service,
     )
 
     repository_cleaner = providers.Factory(
