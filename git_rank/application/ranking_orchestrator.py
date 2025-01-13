@@ -30,13 +30,15 @@ class RankingOrchestrator:
             for local_repository in local_repositories:
                 log.info(f"Ranking repository {local_repository.full_name}")
 
+                repo_statistics = self.statistics_analyzer.analyze_basic_statistics(
+                    local_repository
+                )
+
                 log.info(
                     repo=local_repository.full_name,
-                    stats=self.statistics_analyzer.analyze_basic_statistics(
-                        local_repository
-                    ),
+                    stats=repo_statistics,
                 )
-                # TODO other ranking logic
+                # TODO other ranking
         except:
             log.exception("Error ranking user")
 
