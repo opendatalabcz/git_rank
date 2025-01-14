@@ -3,9 +3,7 @@ from fastapi import APIRouter, Depends
 from structlog import get_logger
 
 from git_rank.application.ranking_orchestrator import RankingOrchestrator
-from git_rank.containers.ranking_orchestrator_container import (
-    RankingOrchestratorContainer,
-)
+from git_rank.containers.ranking_orchestrator_container import RankingOrchestratorContainer
 
 router = APIRouter()
 

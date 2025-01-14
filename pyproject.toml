@@ -44,7 +44,7 @@ pytest-cov = "^3.0.0"
 [tool.black]
 # https://github.com/psf/black
 target-version = ["py311"]
-line-length = 88
+line-length = 100
 color = true
 
 exclude = '''
@@ -66,7 +66,7 @@ exclude = '''
 [tool.isort]
 # https://github.com/timothycrosley/isort/
 py_version = 311
-line_length = 88
+line_length = 100
 
 known_typing = ["typing", "types", "typing_extensions", "mypy", "mypy_extensions"]
 sections = ["FUTURE", "TYPING", "STDLIB", "THIRDPARTY", "FIRSTPARTY", "LOCALFOLDER"]

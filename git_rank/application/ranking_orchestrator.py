@@ -24,8 +24,8 @@ class RankingOrchestrator:
         log.debug("rank_user.start")
 
         try:
-            local_repositories: list[LocalRepository] = (
-                self.repository_cloner.clone_repositories(username)
+            local_repositories: list[LocalRepository] = self.repository_cloner.clone_repositories(
+                username
             )
             for local_repository in local_repositories:
                 log.info(f"Ranking repository {local_repository.full_name}")
