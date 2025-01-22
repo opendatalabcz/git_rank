@@ -22,7 +22,9 @@ class StatisticsAnalyzer:
         log = logger.bind(repository=local_repository.full_name)
         log.debug("analyze_basic_statistics.start")
 
-        basic_statistics: BasicStatistics = BasicStatistics()
+        basic_statistics: BasicStatistics = BasicStatistics(
+            repository_name=local_repository.full_name
+        )
 
         user_commits = self.git_local_service.filter_user_commits(local_repository)
         basic_statistics.total_commits = len(list(local_repository.repository.iter_commits()))
