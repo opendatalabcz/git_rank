@@ -1,6 +1,6 @@
 from git import Commit, PathLike
 
-from git_rank.models.basic_statistics import TechnologyType
+from git_rank.models.repository_statistics import TechnologyType
 from git_rank.services.linters.python_linter import PythonLinter
 
 

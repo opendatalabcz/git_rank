@@ -24,7 +24,7 @@ class TechnologyStatistics:
 
 
 @dataclass
-class BasicStatistics:
+class RepositoryStatistics:
     repository_name: str
     total_commits: int | None = None
     user_commits: int | None = None

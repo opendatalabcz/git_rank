@@ -5,8 +5,12 @@ import os
 from git import Commit, PathLike
 from structlog import get_logger
 
-from git_rank.models.basic_statistics import BasicStatistics, TechnologyStatistics, TechnologyType
 from git_rank.models.local_repository import LocalRepository
+from git_rank.models.repository_statistics import (
+    RepositoryStatistics,
+    TechnologyStatistics,
+    TechnologyType,
+)
 from git_rank.services.git_local_service import GitLocalService
 from git_rank.services.linter_service import LinterService
 
@@ -18,11 +22,13 @@ class StatisticsAnalyzer:
         self.git_local_service = git_local_service
         self.linter_service = linter_service
 
-    def analyze_basic_statistics(self, local_repository: LocalRepository) -> BasicStatistics:
+    def analyze_repository_statistics(
+        self, local_repository: LocalRepository
+    ) -> RepositoryStatistics:
         log = logger.bind(repository=local_repository.full_name)
         log.debug("analyze_basic_statistics.start")
 
-        basic_statistics: BasicStatistics = BasicStatistics(
+        basic_statistics: RepositoryStatistics = RepositoryStatistics(
             repository_name=local_repository.full_name
         )
 

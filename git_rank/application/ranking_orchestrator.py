@@ -30,7 +30,7 @@ class RankingOrchestrator:
             for local_repository in local_repositories:
                 log.info(f"Ranking repository {local_repository.full_name}")
 
-                repo_statistics = self.statistics_analyzer.analyze_basic_statistics(
+                repo_statistics = self.statistics_analyzer.analyze_repository_statistics(
                     local_repository
                 )
 
