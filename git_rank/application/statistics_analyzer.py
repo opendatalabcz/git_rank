@@ -59,7 +59,7 @@ class StatisticsAnalyzer:
             technology_statistics.append(
                 TechnologyStatistics(
                     technology=file_type[0],
-                    changes=file_type[1],
+                    total_changes=file_type[1],
                 )
             )
 

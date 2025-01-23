@@ -11,7 +11,7 @@ class TechnologyType(Enum):
 @dataclass
 class TechnologyStatistics:
     technology: TechnologyType
-    changes: int
+    total_changes: int
 
     @staticmethod
     def map_file_extension_to_technology(file_extension: str) -> TechnologyType:
