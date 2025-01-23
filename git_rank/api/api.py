@@ -4,6 +4,7 @@ from structlog import get_logger
 
 from git_rank.application.ranking_orchestrator import RankingOrchestrator
 from git_rank.containers.ranking_orchestrator_container import RankingOrchestratorContainer
+from git_rank.models.statistics.repository_statistics import RepositoryStatistics
 
 router = APIRouter()
 
@@ -17,13 +18,9 @@ def rank_user(
     ranking_orchestrator: RankingOrchestrator = Depends(
         Provide[RankingOrchestratorContainer.ranking_orchestrator]
     ),
-) -> None:
-    log = logger.bind(username=username)
-    log.info("Started ranking user")
+) -> list[RepositoryStatistics]:
 
-    ranking_orchestrator.rank_user(username)
-
-    log.info("Ended ranking user")
+    return ranking_orchestrator.rank_user(username)
 
 
 @router.get("/status")

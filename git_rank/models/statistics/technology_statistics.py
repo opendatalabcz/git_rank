@@ -21,11 +21,3 @@ class TechnologyStatistics:
         }
 
         return extension_mapping.get(file_extension, TechnologyType.OTHER)
-
-
-@dataclass
-class RepositoryStatistics:
-    repository_name: str
-    total_commits: int | None = None
-    user_commits: int | None = None
-    technologies: list[TechnologyStatistics] | None = None
