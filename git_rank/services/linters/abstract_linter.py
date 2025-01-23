@@ -1,10 +1,20 @@
+from typing import TypedDict
+
 from abc import ABC, abstractmethod
 
 from git import Commit, PathLike
 
 
+class LinterConfig(TypedDict):
+    arguments: str
+
+
 class AbstractLinter(ABC):
-    # TODO create linting return type (score?, code smells? ...)
+
+    def __init__(self, linter_config: LinterConfig) -> None:
+        self.arguments = linter_config["arguments"]
+
+    # TODO create linting return type (score?, code smells? ...), str for now
     @abstractmethod
-    def lint_commit_file(self, commit: Commit, file: PathLike) -> None:
+    def lint_commit_file(self, commit: Commit, file: PathLike) -> str:
         pass

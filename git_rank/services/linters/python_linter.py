@@ -10,12 +10,13 @@ from structlog import get_logger
 from git_rank.services.linters.abstract_linter import AbstractLinter
 
 logger = get_logger()
+
 PYLINT_RANK_PATTERN = "[0-9]\.[0-9]+\/10"
 
 
 class PythonLinter(AbstractLinter):
 
-    def lint_commit_file(self, commit: Commit, file: PathLike) -> None:
+    def lint_commit_file(self, commit: Commit, file: PathLike) -> str:
         log = logger.bind(file=file)
         log.debug("lint_commit_file_python.start")
 
@@ -25,9 +26,9 @@ class PythonLinter(AbstractLinter):
 
             try:
                 lint_results: tuple[StringIO, StringIO] = epylint.py_run(
-                    tmp_commit_file.name, return_std=True
+                    command_options=tmp_commit_file.name + " " + self.arguments, return_std=True
                 )
-                lint_score: str = re.findall(PYLINT_RANK_PATTERN, lint_results[0].getvalue())[-1]
+                lint_score = re.findall(PYLINT_RANK_PATTERN, lint_results[0].getvalue())[-1]
 
                 log.debug(f"lint_commit_file_python.result.stdout: {lint_results[0].getvalue()}")
                 log.debug(f"lint_commit_file_python.result.score: {lint_score}")
@@ -37,3 +38,4 @@ class PythonLinter(AbstractLinter):
                 os.unlink(tmp_commit_file.name)
 
             log.debug("lint_commit_file_python.end")
+            return str(lint_score)

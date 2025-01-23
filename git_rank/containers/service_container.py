@@ -27,5 +27,5 @@ class ServiceContainer(containers.DeclarativeContainer):
 
     linter_service = providers.Factory(
         LinterService,
-        python_linter=providers.Factory(PythonLinter),
+        python_linter=providers.Factory(PythonLinter, linter_config=config.linters.python),
     )

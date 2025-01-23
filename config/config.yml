@@ -41,3 +41,6 @@ git_remote:
     user_repo_relation: "owner" # all, member, owner
     results_per_page: 100
     
+linters:
+  python:
+    arguments: "--disable=E0401"
