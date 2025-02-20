@@ -2,6 +2,7 @@ default_language_version:
   python: python3.9
 
 default_stages: [commit, push]
+exclude: '^(?!git_rank/)'
 
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
@@ -13,8 +14,8 @@ repos:
 
   - repo: local
     hooks:
-      - id: codestyle
-        name: Check codestyle
-        entry: make check-codestyle
+      - id: git_rank_codestyle
+        name: Check Git Rank codestyle
+        entry: bash -c 'cd git_rank && make check-codestyle'
         types: [python]
         language: system
