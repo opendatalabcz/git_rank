@@ -1,5 +1,6 @@
 import typer
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from structlog import get_logger
 
 from git_rank.api import api
@@ -17,6 +18,13 @@ def create_application_container() -> ApplicationContainer:
 
 def create_application(application_container: ApplicationContainer) -> FastAPI:
     fast_api = application_container.fast_api()
+    fast_api.add_middleware(
+        CORSMiddleware,
+        allow_origins=["http://localhost:8091"],
+        allow_credentials=True,
+        allow_methods=["GET"],
+        allow_headers=["*"],
+    )
     fast_api.include_router(api.router)
     return fast_api
 
