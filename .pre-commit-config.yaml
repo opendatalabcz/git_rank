@@ -2,7 +2,6 @@ default_language_version:
   python: python3.9
 
 default_stages: [commit, push]
-exclude: '^(?!git_rank/)'
 
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
@@ -10,7 +9,7 @@ repos:
     hooks:
       - id: check-yaml
       - id: end-of-file-fixer
-        exclude: LICENSE
+        exclude: '^(?!git_rank/)'
 
   - repo: local
     hooks:
@@ -18,4 +17,11 @@ repos:
         name: Check Git Rank codestyle
         entry: bash -c 'cd git_rank && make check-codestyle'
         types: [python]
+        language: system
+
+  - repo: local
+    hooks:
+      - id: www_codestyle
+        name: Check Git Rank WWW codestyle
+        entry: bash -c 'cd www && npm run lint'
         language: system
