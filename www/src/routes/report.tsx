@@ -23,11 +23,13 @@ export default function Report() {
     queryKey: ['status', username],
     queryFn: async () => {
       const response = await client.get(`/rank/${username}`)
-      return response.data.json() as IUserStatistics
+      setShouldFetch(false)
+      return response.data as IUserStatistics
       // mock data fetching
       // return fetch(mock_data).then(r => r.json()).then(r => r as IUserStatistics)
     },
-    enabled: shouldFetch
+    enabled: shouldFetch,
+    refetchOnWindowFocus: false,
   })
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -55,7 +57,7 @@ export default function Report() {
         disabled={isLoading}
         color="primary"
       >
-        {isLoading ? "Getting report..." : 'Get report'}
+        {isLoading ? "Generating report..." : 'Generate report'}
       </Button>
       {isLoading && <Spinner color="primary" size="sm"/>}
     </Form>
