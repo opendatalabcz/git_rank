@@ -2,7 +2,7 @@ import {QueryClient, QueryClientProvider} from '@tanstack/react-query'
 import {
   createBrowserRouter,
   RouterProvider
-} from "react-router-dom";
+} from "react-router-dom"
 import Report from "./routes/report"
 
 const queryClient = new QueryClient()
