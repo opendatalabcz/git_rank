@@ -1,6 +1,5 @@
-from typing import Counter
-
 import os
+from datetime import datetime
 
 from git import Commit, PathLike
 from structlog import get_logger
@@ -52,7 +51,9 @@ class StatisticsAnalyzer:
         return commits_statistics
 
     def _analyze_commit(self, commit: Commit) -> CommitStatistics:
-        commit_statistics = CommitStatistics()
+        commit_statistics = CommitStatistics(
+            commit_sha=commit.hexsha, commit_date=datetime.fromtimestamp(commit.committed_date)
+        )
 
         commit_files = commit.stats.files
 
@@ -61,10 +62,16 @@ class StatisticsAnalyzer:
                 if commit_file[1]["change_type"] != "M" and commit_file[1]["change_type"] != "A":
                     continue
 
-                lint_score = self._lint_file(commit, commit_file[0])
+                technology = TechnologyStatistics.map_file_extension_to_technology(
+                    os.path.splitext(commit_file[0])[1]
+                )
+
+                lint_score = self._lint_file(commit, commit_file[0], technology)
 
                 if commit_file[1]["change_type"] == "M":
-                    lint_score_before = self._lint_file(commit.parents[0], commit_file[0])
+                    lint_score_before = self._lint_file(
+                        commit.parents[0], commit_file[0], technology
+                    )
                     lint_score = lint_score + " - " + lint_score_before
                     file_state = FileState.CHANGED
                 else:
@@ -75,7 +82,8 @@ class StatisticsAnalyzer:
                         file_name=str(commit_file[0]),
                         lint_score=lint_score,
                         file_state=file_state,
-                    )
+                        technology=technology,
+                    ),
                 )
 
         return commit_statistics
@@ -83,25 +91,27 @@ class StatisticsAnalyzer:
     def _analyze_technologies(
         self, commit_statistics: list[CommitStatistics]
     ) -> list[TechnologyStatistics]:
-        technology_types: Counter[TechnologyType] = Counter()
-        technology_statistics: list[TechnologyStatistics] = []
+        technology_statistics: dict[TechnologyType, TechnologyStatistics] = {}
 
         for commit in commit_statistics:
             for file in commit.files:
-                technology = TechnologyStatistics.map_file_extension_to_technology(
-                    os.path.splitext(file.file_name)[1]
-                )
-                technology_types.update([technology])
+                technology_statistic = technology_statistics.get(file.technology)
+                if technology_statistic:
+                    technology_statistics[file.technology] = TechnologyStatistics(
+                        technology=file.technology,
+                        total_changes=technology_statistic.total_changes + 1,
+                        first_used=min(technology_statistic.first_used, commit.commit_date),
+                        last_used=max(technology_statistic.last_used, commit.commit_date),
+                    )
+                else:
+                    technology_statistics[file.technology] = TechnologyStatistics(
+                        technology=file.technology,
+                        total_changes=1,
+                        first_used=commit.commit_date,
+                        last_used=commit.commit_date,
+                    )
 
-        for technology_type in technology_types.items():
-            technology_statistics.append(
-                TechnologyStatistics(
-                    technology=technology_type[0],
-                    total_changes=technology_type[1],
-                )
-            )
+        return list(technology_statistics.values())
 
-        return technology_statistics
-
-    def _lint_file(self, commit: Commit, file: PathLike) -> str:
-        return self.linter_service.lint_commit_file(commit, file)
+    def _lint_file(self, commit: Commit, file: PathLike, technology: TechnologyType) -> str:
+        return self.linter_service.lint_commit_file(commit, file, technology)
