@@ -13,8 +13,8 @@ class TechnologyType(Enum):
 class TechnologyStatistics:
     technology: TechnologyType
     total_changes: int
-    first_used: datetime
-    last_used: datetime
+    first_used_date: datetime
+    last_used_date: datetime
 
     @staticmethod
     def map_file_extension_to_technology(file_extension: str) -> TechnologyType:

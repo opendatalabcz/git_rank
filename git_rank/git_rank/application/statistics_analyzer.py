@@ -100,15 +100,17 @@ class StatisticsAnalyzer:
                     technology_statistics[file.technology] = TechnologyStatistics(
                         technology=file.technology,
                         total_changes=technology_statistic.total_changes + 1,
-                        first_used=min(technology_statistic.first_used, commit.commit_date),
-                        last_used=max(technology_statistic.last_used, commit.commit_date),
+                        first_used_date=min(
+                            technology_statistic.first_used_date, commit.commit_date
+                        ),
+                        last_used_date=max(technology_statistic.last_used_date, commit.commit_date),
                     )
                 else:
                     technology_statistics[file.technology] = TechnologyStatistics(
                         technology=file.technology,
                         total_changes=1,
-                        first_used=commit.commit_date,
-                        last_used=commit.commit_date,
+                        first_used_date=commit.commit_date,
+                        last_used_date=commit.commit_date,
                     )
 
         return list(technology_statistics.values())

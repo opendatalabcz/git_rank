@@ -5,6 +5,7 @@ from git_rank.application.repository_cloner import RepositoryCloner
 from git_rank.application.statistics_analyzer import StatisticsAnalyzer
 from git_rank.models.local_repository import LocalRepository
 from git_rank.models.statistics.repository_statistics import RepositoryStatistics
+from git_rank.models.statistics.user_statistics import UserStatistics
 
 logger = get_logger()
 
@@ -20,7 +21,7 @@ class RankingOrchestrator:
         self.statistics_analyzer = statistics_analyzer
         self.repository_cleaner = repository_cleaner
 
-    def rank_user(self, username: str) -> list[RepositoryStatistics]:
+    def rank_user(self, username: str) -> UserStatistics:
         log = logger.bind(username=username)
         log.info("rank_user.start")
 
@@ -44,4 +45,4 @@ class RankingOrchestrator:
         self.repository_cleaner.remove_repositories_by_user(username)
 
         log.info("rank_user.end")
-        return repositories_statistics
+        return UserStatistics(username=username, repositories=repositories_statistics)
