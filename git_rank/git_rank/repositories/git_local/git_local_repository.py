@@ -18,12 +18,15 @@ class GitLocalRepository:
             ),
             full_name=remote_repository.full_name,
             username=remote_repository.username,
+            user_name=remote_repository.user_name,
         )
 
         return repo
 
     def delete_repository(self, local_repository: LocalRepository) -> None:
-        rmtree(str(local_repository.repository.working_tree_dir))
+        if os.path.exists(str(local_repository.repository.working_tree_dir)):
+            rmtree(str(local_repository.repository.working_tree_dir))
 
     def delete_repositories_by_user(self, username: str) -> None:
-        rmtree(os.path.join(STORAGE_DIR, username))
+        if os.path.exists(os.path.join(STORAGE_DIR, username)):
+            rmtree(os.path.join(STORAGE_DIR, username))

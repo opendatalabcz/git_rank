@@ -8,3 +8,4 @@ class LocalRepository:
     repository: Repo
     full_name: str
     username: str
+    user_name: str

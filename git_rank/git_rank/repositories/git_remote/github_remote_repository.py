@@ -30,6 +30,8 @@ class GithubRemoteRepository(AbstractGitRemoteRepository):
         log = logger.bind(username=username)
         log.debug("get_repositories_by_user.start")
 
+        user_name = self._get_github_user_name(username)
+
         page = 1
         remote_repositories = []
         while True:
@@ -66,6 +68,7 @@ class GithubRemoteRepository(AbstractGitRemoteRepository):
                         clone_url=remote_repository["clone_url"],
                         full_name=remote_repository["full_name"],
                         username=username,
+                        user_name=user_name,
                     ),
                     repositories_page_json,
                 )
@@ -74,3 +77,14 @@ class GithubRemoteRepository(AbstractGitRemoteRepository):
 
         log.debug("get_repositories_by_user.end", repositories=remote_repositories)
         return remote_repositories
+
+    def _get_github_user_name(self, username: str) -> str:
+        return str(
+            requests.get(
+                url=f"{self.api_url}/users/{username}",
+                headers={
+                    "Accept": "application/vnd.github+json",
+                    "Authorization": f"Bearer {self.access_token}",
+                },
+            ).json()["name"]
+        )

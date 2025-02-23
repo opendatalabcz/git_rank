@@ -28,9 +28,16 @@ class PythonLinter(AbstractLinter):
                 lint_results: tuple[StringIO, StringIO] = epylint.py_run(
                     command_options=tmp_commit_file.name + " " + self.arguments, return_std=True
                 )
-                lint_score = re.findall(PYLINT_RANK_PATTERN, lint_results[0].getvalue())[-1]
 
-                log.debug(f"lint_commit_file_python.result.stdout: {lint_results[0].getvalue()}")
+                lint_result = re.findall(PYLINT_RANK_PATTERN, lint_results[0].getvalue())
+                if lint_result:
+                    lint_score = lint_result[-1]
+                    log.debug(
+                        f"lint_commit_file_python.result.stdout: {lint_results[0].getvalue()}"
+                    )
+                else:
+                    lint_score = 0
+
                 log.debug(f"lint_commit_file_python.result.score: {lint_score}")
             except:
                 log.exception("lint_commit_file_python.error")
