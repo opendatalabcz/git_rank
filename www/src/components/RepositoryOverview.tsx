@@ -1,6 +1,9 @@
-import { Table } from "reactstrap"
+import {AccordionBody, AccordionHeader, AccordionItem, Table, UncontrolledAccordion } from "reactstrap"
 import { IRepositoryStatistics } from "../types";
 import TechnologyOverview from "./TechnologyOverview";
+import CommitOverview from "./CommitOverview";
+import TechnologiesPieChart from "./charts/TechnologiesPieChart";
+import CommitsDateChart from "./charts/TechnologiesDateChart";
 
 
 export default function RepositoryOverview({ repositoryStatistics }: {repositoryStatistics: IRepositoryStatistics}) {
@@ -25,6 +28,23 @@ export default function RepositoryOverview({ repositoryStatistics }: {repository
                 ))}
                 </tbody>
             </Table>
+            <div className="charts">
+            <TechnologiesPieChart technologies={repositoryStatistics.technologies}/>
+            <CommitsDateChart commits={repositoryStatistics.commits}/>
+            </div>
+            <h3>Commits</h3>
+            <UncontrolledAccordion stayOpen>
+                {repositoryStatistics.commits.map(commit => (
+                    <AccordionItem key={commit.commit_sha}>
+                        <AccordionHeader targetId={commit.commit_sha}>
+                            <b>Commit {commit.commit_sha}</b>
+                        </AccordionHeader>
+                        <AccordionBody accordionId={commit.commit_sha}>
+                            <CommitOverview commitStatistics={commit}/>
+                        </AccordionBody>
+                    </AccordionItem>
+                ))}
+            </UncontrolledAccordion>
         </>
     )
 }

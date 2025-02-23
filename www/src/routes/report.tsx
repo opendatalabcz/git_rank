@@ -46,14 +46,12 @@ export default function Report() {
         <Input
           id="username"
           type="text"
-          className="form-control"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
         />
 
       <Button 
         type="submit"
-        className="btn btn-primary"
         disabled={isLoading}
         color="primary"
       >

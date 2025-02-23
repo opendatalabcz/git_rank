@@ -18,7 +18,7 @@ export interface ITechnologyStatistics {
     last_used_date: string
 }
 
-interface ICommitStatistics {
+export interface ICommitStatistics {
     average_add_lint_score: number
     average_change_lint_score: number
     commit_sha: string
@@ -26,7 +26,7 @@ interface ICommitStatistics {
     files: IFileStatistics[]
 }
 
-interface IFileStatistics {
+export interface IFileStatistics {
     file_name: string
     lint_score: number
     file_state: string
