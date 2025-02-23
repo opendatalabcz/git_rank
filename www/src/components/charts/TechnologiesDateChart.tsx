@@ -8,17 +8,20 @@ export default function CommitsDateChart({ commits }: {commits: ICommitStatistic
           chart: {
             zoom: {
               enabled: true,
-              type: 'xy'
+              type: 'xy',
             }
           },
           xaxis: {
-            type: 'datetime'
+            type: 'datetime',
+            labels: {
+              datetimeUTC: false,
+            }
           },
           markers: {
-            size: 10
+            size: 10,
           },
           title: {
-            text: 'Technology changes in time'
+            text: 'Technology changes in time',
           },
         }
 

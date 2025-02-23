@@ -10,8 +10,6 @@ export default function RepositoryOverview({ repositoryStatistics }: {repository
     return (
         <>
             <h2>Repository {repositoryStatistics.repository_name}</h2>
-            <p>Total commits: {repositoryStatistics.total_commits}</p>
-            <p>User commits: {repositoryStatistics.user_commits}</p>
             <h3>Technologies used</h3>
             <Table size="sm" striped>
                 <thead>
@@ -33,6 +31,8 @@ export default function RepositoryOverview({ repositoryStatistics }: {repository
             <CommitsDateChart commits={repositoryStatistics.commits}/>
             </div>
             <h3>Commits</h3>
+            <p>Total commits: {repositoryStatistics.total_commits}</p>
+            <p>User commits: {repositoryStatistics.user_commits}</p>
             <UncontrolledAccordion stayOpen>
                 {repositoryStatistics.commits.map(commit => (
                     <AccordionItem key={commit.commit_sha}>
