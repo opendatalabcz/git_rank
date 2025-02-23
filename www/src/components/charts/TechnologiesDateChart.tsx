@@ -43,7 +43,7 @@ function prepareData(commits: ICommitStatistics[]) {
             if (technologyGroup.has(file.technology)) {
                 technologyGroup.get(file.technology)!.push([Date.parse(commit.commit_date), 1])
             } else {
-                technologyGroup.set(file.technology, [[Date.parse(commit.commit_date), 0]])
+                technologyGroup.set(file.technology, [[Date.parse(commit.commit_date), 1]])
             }
         })
     })
