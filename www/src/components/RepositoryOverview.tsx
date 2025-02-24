@@ -4,6 +4,7 @@ import TechnologyOverview from "./TechnologyOverview";
 import CommitOverview from "./CommitOverview";
 import TechnologiesPieChart from "./charts/TechnologiesPieChart";
 import CommitsDateChart from "./charts/TechnologiesDateChart";
+import LintScoreDateChart from "./charts/LintScoreDateChart";
 
 
 export default function RepositoryOverview({ repositoryStatistics }: {repositoryStatistics: IRepositoryStatistics}) {
@@ -29,6 +30,7 @@ export default function RepositoryOverview({ repositoryStatistics }: {repository
             <div className="charts">
             <TechnologiesPieChart technologies={repositoryStatistics.technologies}/>
             <CommitsDateChart commits={repositoryStatistics.commits}/>
+            <LintScoreDateChart commits={repositoryStatistics.commits}/>
             </div>
             <h3>Commits</h3>
             <p>Total commits: {repositoryStatistics.total_commits}</p>
