@@ -1,4 +1,4 @@
-import {AccordionBody, AccordionHeader, AccordionItem, Table, UncontrolledAccordion } from "reactstrap"
+import {AccordionBody, AccordionHeader, AccordionItem, Button, Table, UncontrolledAccordion, UncontrolledCollapse } from "reactstrap"
 import { IRepositoryStatistics } from "../types";
 import TechnologyOverview from "./TechnologyOverview";
 import CommitOverview from "./CommitOverview";
@@ -35,18 +35,21 @@ export default function RepositoryOverview({ repositoryStatistics }: {repository
             <h3>Commits</h3>
             <p>Total commits: {repositoryStatistics.total_commits}</p>
             <p>User commits: {repositoryStatistics.user_commits}</p>
-            <UncontrolledAccordion stayOpen>
-                {repositoryStatistics.commits.map(commit => (
-                    <AccordionItem key={commit.commit_sha}>
-                        <AccordionHeader targetId={commit.commit_sha}>
-                            <b>Commit {commit.commit_sha}</b>
-                        </AccordionHeader>
-                        <AccordionBody accordionId={commit.commit_sha}>
-                            <CommitOverview commitStatistics={commit}/>
-                        </AccordionBody>
-                    </AccordionItem>
-                ))}
-            </UncontrolledAccordion>
+            <Button color="secondary" id="commit_toggler">Collapse commits</Button>
+            <UncontrolledCollapse toggler="#commit_toggler">
+                <UncontrolledAccordion stayOpen>
+                    {repositoryStatistics.commits.map(commit => (
+                        <AccordionItem key={commit.commit_sha}>
+                            <AccordionHeader targetId={commit.commit_sha}>
+                                <b>Commit {commit.commit_sha}</b>
+                            </AccordionHeader>
+                            <AccordionBody accordionId={commit.commit_sha}>
+                                <CommitOverview commitStatistics={commit}/>
+                            </AccordionBody>
+                        </AccordionItem>
+                    ))}
+                </UncontrolledAccordion>
+            </UncontrolledCollapse>
         </>
     )
 }
