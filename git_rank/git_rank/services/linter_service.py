@@ -10,8 +10,8 @@ class LinterService:
     def __init__(self, python_linter: PythonLinter):
         self.python_linter = python_linter
 
-    def lint_commit_file(self, commit: Commit, file: PathLike, technology: TechnologyType) -> str:
-        lint_score: str = "0"
+    def lint_commit_file(self, commit: Commit, file: PathLike, technology: TechnologyType) -> float:
+        lint_score: float = 0
 
         match technology:
             case TechnologyType.PYTHON:

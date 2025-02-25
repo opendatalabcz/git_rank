@@ -16,7 +16,7 @@ PYLINT_RANK_PATTERN = "[0-9]\.[0-9]+\/10"
 
 class PythonLinter(AbstractLinter):
 
-    def lint_commit_file(self, commit: Commit, file: PathLike) -> str:
+    def lint_commit_file(self, commit: Commit, file: PathLike) -> float:
         log = logger.bind(file=file)
         log.debug("lint_commit_file_python.start")
 
@@ -31,7 +31,7 @@ class PythonLinter(AbstractLinter):
 
                 lint_result = re.findall(PYLINT_RANK_PATTERN, lint_results[0].getvalue())
                 if lint_result:
-                    lint_score = lint_result[-1]
+                    lint_score = float(str(lint_result[-1]).split("/")[0])
                     log.debug(
                         f"lint_commit_file_python.result.stdout: {lint_results[0].getvalue()}"
                     )
@@ -45,4 +45,4 @@ class PythonLinter(AbstractLinter):
                 os.unlink(tmp_commit_file.name)
 
             log.debug("lint_commit_file_python.end")
-            return str(lint_score)
+            return lint_score

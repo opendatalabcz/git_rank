@@ -12,6 +12,6 @@ class FileState(Enum):
 @dataclass
 class FileStatistics:
     file_name: str
-    lint_score: str
+    lint_score: float
     file_state: FileState
     technology: TechnologyType

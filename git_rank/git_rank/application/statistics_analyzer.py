@@ -72,7 +72,7 @@ class StatisticsAnalyzer:
                     lint_score_before = self._lint_file(
                         commit.parents[0], commit_file[0], technology
                     )
-                    lint_score = lint_score + " - " + lint_score_before
+                    lint_score = lint_score - lint_score_before
                     file_state = FileState.CHANGED
                 else:
                     file_state = FileState.ADDED
@@ -85,6 +85,12 @@ class StatisticsAnalyzer:
                         technology=technology,
                     ),
                 )
+            commit_statistics.average_add_lint_score = self._calculate_average_lint_score(
+                commit_statistics.files, FileState.ADDED
+            )
+            commit_statistics.average_change_lint_score = self._calculate_average_lint_score(
+                commit_statistics.files, FileState.CHANGED
+            )
 
         return commit_statistics
 
@@ -115,5 +121,29 @@ class StatisticsAnalyzer:
 
         return list(technology_statistics.values())
 
-    def _lint_file(self, commit: Commit, file: PathLike, technology: TechnologyType) -> str:
+    def _lint_file(self, commit: Commit, file: PathLike, technology: TechnologyType) -> float:
         return self.linter_service.lint_commit_file(commit, file, technology)
+
+    def _calculate_average_lint_score(
+        self, files: list[FileStatistics], file_state: FileState
+    ) -> float:
+        total = len(
+            list(
+                filter(
+                    lambda file: file.file_state == file_state
+                    and file.technology != TechnologyType.OTHER,
+                    files,
+                )
+            )
+        )
+
+        return (
+            sum(
+                file.lint_score
+                for file in files
+                if file.file_state == file_state and file.technology != TechnologyType.OTHER
+            )
+            / total
+            if total
+            else 0
+        )
