@@ -34,7 +34,10 @@ export default function LintScoreDateChart({ commits }: {commits: ICommitStatist
             }
           },
           markers: {
-            size: 10,
+            size: 5,
+          },
+          stroke: {
+            curve: 'smooth',
           },
           title: {
             text: 'Average lint scores in time',
