@@ -19,8 +19,8 @@ export interface ITechnologyStatistics {
 }
 
 export interface ICommitStatistics {
-    average_add_lint_score: number
-    average_change_lint_score: number
+    average_add_lint_score: number | null
+    average_change_lint_score: number | null
     commit_sha: string
     commit_date: string
     files: IFileStatistics[]

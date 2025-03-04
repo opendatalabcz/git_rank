@@ -3,17 +3,17 @@ import { ICommitStatistics } from "../../types"
 
 export default function LintScoreDateChart({ commits }: {commits: ICommitStatistics[]}) {
 
-    const add_lint = commits.map(
+    const add_lint = commits.filter(commit => commit.average_add_lint_score != null).map(
       commit => (
         {
           x: commit.commit_date,
-          y: commit.average_add_lint_score.toFixed(2)
+          y: commit.average_add_lint_score?.toFixed(2)
         }))
-    const change_lint = commits.map(
+    const change_lint = commits.filter(commit => commit.average_change_lint_score != null).map(
       commit => (
         {
           x: commit.commit_date,
-          y: commit.average_change_lint_score.toFixed(2)
+          y: commit.average_change_lint_score?.toFixed(2)
         }))
 
     const series = [

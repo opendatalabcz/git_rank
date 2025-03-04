@@ -126,7 +126,7 @@ class StatisticsAnalyzer:
 
     def _calculate_average_lint_score(
         self, files: list[FileStatistics], file_state: FileState
-    ) -> float:
+    ) -> float | None:
         total = len(
             list(
                 filter(
@@ -145,5 +145,5 @@ class StatisticsAnalyzer:
             )
             / total
             if total
-            else -1
+            else None
         )
