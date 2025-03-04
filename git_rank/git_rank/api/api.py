@@ -1,5 +1,6 @@
 from dependency_injector.wiring import Provide, inject
 from fastapi import APIRouter, Depends
+from pydantic import HttpUrl
 from structlog import get_logger
 
 from git_rank.application.ranking_orchestrator import RankingOrchestrator
@@ -21,6 +22,21 @@ def rank_user(
 ) -> UserStatistics:
 
     return ranking_orchestrator.rank_user(username)
+
+
+@router.get("/rank/{username}/repository")
+@inject
+def rank_repository(
+    username: str,
+    repository_url: HttpUrl,
+    ranking_orchestrator: RankingOrchestrator = Depends(
+        Provide[RankingOrchestratorContainer.ranking_orchestrator]
+    ),
+) -> UserStatistics:
+
+    return ranking_orchestrator.rank_user_repository(
+        username=username, repository_url=str(repository_url)
+    )
 
 
 @router.get("/status")

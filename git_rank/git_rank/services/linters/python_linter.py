@@ -36,7 +36,7 @@ class PythonLinter(AbstractLinter):
                         f"lint_commit_file_python.result.stdout: {lint_results[0].getvalue()}"
                     )
                 else:
-                    lint_score = -1
+                    lint_score = 10
 
                 log.debug(f"lint_commit_file_python.result.score: {lint_score}")
             except:

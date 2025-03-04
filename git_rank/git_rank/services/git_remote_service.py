@@ -11,3 +11,6 @@ class GitRemoteService:
 
     def get_user_repositories(self, username: str) -> list[RemoteRepository]:
         return self.git_remote_repository.get_repositories_by_user(username)
+
+    def get_user_repository_by_url(self, username: str, repository_url: str) -> RemoteRepository:
+        return self.git_remote_repository.get_user_repository_by_url(username, repository_url)

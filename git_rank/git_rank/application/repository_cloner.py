@@ -23,3 +23,15 @@ class RepositoryCloner:
 
         log.debug("clone_repositories.end")
         return local_repositories
+
+    def clone_user_repository(self, username: str, repository_url: str) -> LocalRepository:
+        log = logger.bind(username=username, repository_url=repository_url)
+        log.debug("clone_user_repository.start")
+
+        remote_repository = self.git_remote_service.get_user_repository_by_url(
+            username, repository_url
+        )
+        local_repository = self.git_local_service.clone_repository(remote_repository)
+
+        log.debug("clone_user_repository.end")
+        return local_repository

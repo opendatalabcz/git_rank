@@ -78,6 +78,15 @@ class GithubRemoteRepository(AbstractGitRemoteRepository):
         log.debug("get_repositories_by_user.end", repositories=remote_repositories)
         return remote_repositories
 
+    def get_user_repository_by_url(self, username: str, repository_url: str) -> RemoteRepository:
+        user_name = self._get_github_user_name(username)
+        return RemoteRepository(
+            clone_url=repository_url,
+            full_name=repository_url.split(".git")[0].split("/")[-1],
+            username=username,
+            user_name=user_name,
+        )
+
     def _get_github_user_name(self, username: str) -> str:
         return str(
             requests.get(
