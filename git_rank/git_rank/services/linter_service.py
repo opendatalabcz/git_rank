@@ -11,7 +11,7 @@ class LinterService:
         self.python_linter = python_linter
 
     def lint_commit_file(self, commit: Commit, file: PathLike, technology: TechnologyType) -> float:
-        lint_score: float = 0
+        lint_score: float = -1
 
         match technology:
             case TechnologyType.PYTHON:

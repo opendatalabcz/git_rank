@@ -141,9 +141,11 @@ class StatisticsAnalyzer:
             sum(
                 file.lint_score
                 for file in files
-                if file.file_state == file_state and file.technology != TechnologyType.OTHER
+                if file.file_state == file_state
+                and file.technology != TechnologyType.OTHER
+                and file.lint_score != -1
             )
             / total
             if total
-            else 0
+            else -1
         )
