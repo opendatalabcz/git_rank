@@ -30,6 +30,7 @@ export default function Root() {
     },
     enabled: shouldFetch,
     refetchOnWindowFocus: false,
+    staleTime: 1000 * 60 * 10, // 10 minutes
   })
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -39,13 +40,15 @@ export default function Root() {
 
   return (
     <div>
-    <Form onSubmit={handleSubmit}>
+    <h1 className="text-center">Git Rank</h1>
+    <Form onSubmit={handleSubmit} className="input-form">
         <Label htmlFor="username">
-          Insert username:
+          Username:
         </Label>
         <Input
           id="username"
           type="text"
+          required
           value={username}
           onChange={(e) => setUsername(e.target.value)}
         />
