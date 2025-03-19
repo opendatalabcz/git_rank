@@ -16,6 +16,7 @@ export interface ITechnologyStatistics {
     total_changes: number
     first_used_date: string
     last_used_date: string
+    weeks_used: number
 }
 
 export interface ICommitStatistics {

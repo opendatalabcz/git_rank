@@ -9,6 +9,7 @@ export default function TechnologyOverview({ technologyStatistics }: { technolog
             <td>{technologyStatistics.total_changes}</td>
             <td>{dayjs(technologyStatistics.first_used_date).format(DATE_FORMAT)}</td>
             <td>{dayjs(technologyStatistics.last_used_date).format(DATE_FORMAT)}</td>
+            <td>{technologyStatistics.weeks_used}</td>
         </tr>
     )
 }

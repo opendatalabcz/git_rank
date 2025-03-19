@@ -15,6 +15,7 @@ class TechnologyStatistics:
     total_changes: int
     first_used_date: datetime
     last_used_date: datetime
+    weeks_used: int
 
     @staticmethod
     def map_file_extension_to_technology(file_extension: str) -> TechnologyType:

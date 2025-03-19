@@ -1,4 +1,5 @@
 import os
+from collections import defaultdict
 from datetime import datetime
 
 from git import Commit, PathLike
@@ -98,9 +99,11 @@ class StatisticsAnalyzer:
         self, commit_statistics: list[CommitStatistics]
     ) -> list[TechnologyStatistics]:
         technology_statistics: dict[TechnologyType, TechnologyStatistics] = {}
+        technology_weeks = defaultdict(set)
 
         for commit in commit_statistics:
             for file in commit.files:
+                technology_weeks[file.technology].add(commit.commit_date.isocalendar()[:2])
                 technology_statistic = technology_statistics.get(file.technology)
                 if technology_statistic:
                     technology_statistics[file.technology] = TechnologyStatistics(
@@ -110,6 +113,7 @@ class StatisticsAnalyzer:
                             technology_statistic.first_used_date, commit.commit_date
                         ),
                         last_used_date=max(technology_statistic.last_used_date, commit.commit_date),
+                        weeks_used=len(technology_weeks[file.technology]),
                     )
                 else:
                     technology_statistics[file.technology] = TechnologyStatistics(
@@ -117,6 +121,7 @@ class StatisticsAnalyzer:
                         total_changes=1,
                         first_used_date=commit.commit_date,
                         last_used_date=commit.commit_date,
+                        weeks_used=len(technology_weeks[file.technology]),
                     )
 
         return list(technology_statistics.values())

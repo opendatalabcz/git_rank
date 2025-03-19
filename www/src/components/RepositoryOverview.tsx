@@ -19,6 +19,7 @@ export default function RepositoryOverview({ repositoryStatistics }: {repository
                         <th>Total changes</th>
                         <th>First used date</th>
                         <th>Last used date</th>
+                        <th>Weeks used</th>
                     </tr>
                 </thead>
                 <tbody>
