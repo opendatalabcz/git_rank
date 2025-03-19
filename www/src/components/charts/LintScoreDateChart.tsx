@@ -45,9 +45,9 @@ export default function LintScoreDateChart({ commits }: {commits: ICommitStatist
         }
 
     return (
-      <div>
-        <div className="chart">
-            <ReactApexChart options={options} series={series} type="line" width={700} height={500}/>
+      <div className="chart">
+        <div>
+            <ReactApexChart options={options} series={series} type="line" width={"100%"} height={"auto"}/>
           </div>
         <div id="html-dist"></div>
       </div>

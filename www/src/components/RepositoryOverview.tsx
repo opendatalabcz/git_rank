@@ -28,9 +28,9 @@ export default function RepositoryOverview({ repositoryStatistics }: {repository
                 </tbody>
             </Table>
             <div className="charts">
-            <TechnologiesPieChart technologies={repositoryStatistics.technologies}/>
-            <CommitsDateChart commits={repositoryStatistics.commits}/>
-            <LintScoreDateChart commits={repositoryStatistics.commits}/>
+                <TechnologiesPieChart technologies={repositoryStatistics.technologies}/>
+                <CommitsDateChart commits={repositoryStatistics.commits}/>
+                <LintScoreDateChart commits={repositoryStatistics.commits}/>
             </div>
             <h3>Commits</h3>
             <p>Total commits: {repositoryStatistics.total_commits}</p>

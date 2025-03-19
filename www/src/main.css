@@ -12,3 +12,14 @@ body {
   flex-direction: row; 
   justify-content: flex-start;
 }
+
+.chart {
+  width: 33%;
+}
+
+.input-form {
+  width: 20%;
+  padding: 15px;
+  margin: auto;
+  height: 100%;
+}

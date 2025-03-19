@@ -8,9 +8,18 @@ export default function TechnologiesPieChart({ technologies }: {technologies: IT
       chart: {
         type: 'donut',
       },
-      labels: technologies.map(technology => technology.technology),
+      labels: technologies.map(technology => {
+        switch(technology.technology){
+          case "PYTHON":
+            return ".py"
+          case "JAVA":
+            return ".java"
+          default:
+            return "other"
+        }
+      }),
       title: {
-        text: 'Technology distribution'
+        text: 'File extension distribution'
       },
       responsive: [{
         breakpoint: 480,
@@ -23,9 +32,9 @@ export default function TechnologiesPieChart({ technologies }: {technologies: IT
     }
 
     return (
-      <div>
-        <div className="chart">
-            <ReactApexChart options={options} series={series} type="donut" height={500} width={500}/>
+      <div className="chart">
+        <div>
+            <ReactApexChart options={options} series={series} type="donut" height={"auto"} width={"100%"}/>
           </div>
         <div id="html-dist"></div>
       </div>

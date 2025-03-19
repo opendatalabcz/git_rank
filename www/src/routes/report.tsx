@@ -1,7 +1,7 @@
 import { IUserStatistics } from "../types"
 import UserOverview from "../components/UserOverview"
 import { useNavigate, useLocation, useParams } from "react-router"
-import { Button } from "reactstrap"
+import { Button, Container } from "reactstrap"
 
 
 export default function Report() {
@@ -22,10 +22,10 @@ export default function Report() {
   }
 
   return (
-    <div>
-    <UserOverview key={username} userStatistics={reportData}/>
-    <h1>Raw data</h1>
-    <pre>{JSON.stringify(reportData, null, 2)}</pre>
-  </div>
-  );
+    <Container fluid className="px-4 py-3">
+      <UserOverview key={username} userStatistics={reportData}/>
+      <h1>Raw data</h1>
+      <pre>{JSON.stringify(reportData, null, 2)}</pre>
+  </Container>
+  )
 }
