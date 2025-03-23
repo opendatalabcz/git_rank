@@ -1,6 +1,7 @@
 export interface IUserStatistics {
     username: string
     repositories: IRepositoryStatistics[]
+    cross_repository: IRepositoryStatistics | null
 }
 
 export interface IRepositoryStatistics {

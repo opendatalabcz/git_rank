@@ -7,3 +7,4 @@ from git_rank.models.statistics.repository_statistics import RepositoryStatistic
 class UserStatistics:
     username: str
     repositories: list[RepositoryStatistics]
+    cross_repository: RepositoryStatistics | None

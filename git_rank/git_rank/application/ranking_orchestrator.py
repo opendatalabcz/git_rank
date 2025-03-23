@@ -26,6 +26,7 @@ class RankingOrchestrator:
         log.info("rank_user.start")
 
         repositories_statistics: list[RepositoryStatistics] = []
+        cross_repositories_statistics: RepositoryStatistics | None = None
 
         try:
             local_repositories: list[LocalRepository] = self.repository_cloner.clone_repositories(
@@ -39,13 +40,22 @@ class RankingOrchestrator:
                 )
 
                 log.info("rank_user.rank_repository.end", repository=local_repository.full_name)
+            cross_repositories_statistics = (
+                self.statistics_analyzer.analyze_cross_repository_statistics(
+                    repositories_statistics
+                )
+            )
         except:
             log.exception("rank_user.error")
 
         self.repository_cleaner.remove_repositories_by_user(username)
 
         log.info("rank_user.end")
-        return UserStatistics(username=username, repositories=repositories_statistics)
+        return UserStatistics(
+            username=username,
+            repositories=repositories_statistics,
+            cross_repository=cross_repositories_statistics,
+        )
 
     def rank_user_repository(self, username: str, repository_url: str) -> UserStatistics:
         log = logger.bind(username=username, repository_url=repository_url)
@@ -66,4 +76,6 @@ class RankingOrchestrator:
         self.repository_cleaner.remove_repositories_by_user(username)
 
         log.info("rank_repository.end")
-        return UserStatistics(username=username, repositories=repositories_statistics)
+        return UserStatistics(
+            username=username, repositories=repositories_statistics, cross_repository=None
+        )

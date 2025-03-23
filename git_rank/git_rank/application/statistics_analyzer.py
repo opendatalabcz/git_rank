@@ -5,6 +5,7 @@ from datetime import datetime
 from git import Commit, PathLike
 from structlog import get_logger
 
+from git_rank.constants.git_rank_constants import GitRankConstants
 from git_rank.models.local_repository import LocalRepository
 from git_rank.models.statistics.commit_statistics import CommitStatistics
 from git_rank.models.statistics.file_statistics import FileState, FileStatistics
@@ -42,6 +43,43 @@ class StatisticsAnalyzer:
 
         log.debug("analyze_repository_statistics.end")
         return repository_statistics
+
+    def analyze_cross_repository_statistics(
+        self, user_repositories_statistics: list[RepositoryStatistics]
+    ) -> RepositoryStatistics | None:
+        logger.debug("analyze_cross_repository_statistics.start")
+
+        if len(user_repositories_statistics) == 1:
+            return None
+
+        cross_repository_statistics: RepositoryStatistics = RepositoryStatistics(
+            repository_name=GitRankConstants.CROSS_REPOSITORY_NAME
+        )
+
+        cross_repository_statistics.total_commits = sum(
+            user_repository_statistics.total_commits
+            for user_repository_statistics in user_repositories_statistics
+        )
+        cross_repository_statistics.user_commits = sum(
+            user_repository_statistics.user_commits
+            for user_repository_statistics in user_repositories_statistics
+        )
+        cross_repository_statistics.commits = sum(
+            [
+                user_repository_statistics.commits
+                for user_repository_statistics in user_repositories_statistics
+            ],
+            [],
+        )
+        cross_repository_statistics.technologies = sum(
+            [
+                user_repository_statistics.technologies
+                for user_repository_statistics in user_repositories_statistics
+            ],
+            [],
+        )
+
+        return cross_repository_statistics
 
     def _analyze_commits(self, commits: list[Commit]) -> list[CommitStatistics]:
         commits_statistics: list[CommitStatistics] = []
