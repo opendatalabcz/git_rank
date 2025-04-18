@@ -1,3 +1,4 @@
+import json
 import math
 import os
 import subprocess
@@ -25,7 +26,6 @@ class JavaLinter(AbstractLinter):
                 with open(tmp_commit_file.name, "r") as f:
                     lines = sum(1 for _ in f)
 
-                if lines:
                     result = subprocess.run(
                         f"pmd check -d {tmp_commit_file.name}" + " " + self.arguments,
                         shell=True,
@@ -33,11 +33,20 @@ class JavaLinter(AbstractLinter):
                         text=True,
                     )
 
-                    errors = len(result.stdout.split("\n")) - 1
-                    error_rate = errors / lines
-                    lint_score = max(1, 10 * math.exp(-error_rate * 5))
-                else:
-                    lint_score = 10
+                    result_json = json.loads(result.stdout)
+                    result_files = result_json["files"]
+
+                    if result_files:
+                        violations = result_files[0]["violations"]
+                        error_violations = len([v for v in violations if v["priority"] == 5])
+                        other_violations = len(violations) - error_violations
+
+                        lint_score = max(
+                            0,
+                            10.0 - ((float(5 * error_violations + other_violations) / lines) * 10),
+                        )
+                    else:
+                        lint_score = 0
 
                 log.debug(f"lint_commit_file_java.result.score: {lint_score}")
             except:

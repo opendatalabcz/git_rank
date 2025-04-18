@@ -45,4 +45,4 @@ linters:
   python:
     arguments: "--disable=E0401"
   java:
-    arguments: "-f text -R rulesets/java/quickstart.xml"
+    arguments: "-f json -R rulesets/java/quickstart.xml"
