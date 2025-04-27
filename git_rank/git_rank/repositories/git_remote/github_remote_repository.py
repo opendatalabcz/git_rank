@@ -3,8 +3,8 @@ from typing import Any, TypedDict
 import requests
 from structlog import get_logger
 
-from git_rank.git_rank.models.user_data import UserData
 from git_rank.models.remote_repository import RemoteRepository
+from git_rank.models.user_data import UserData
 from git_rank.repositories.git_remote.abstract_git_remote_repository import (
     AbstractGitRemoteRepository,
 )
@@ -93,16 +93,27 @@ class GithubRemoteRepository(AbstractGitRemoteRepository):
     def _get_github_user_data(self, username: str) -> UserData:
         """Fetches user data from Github API."""
 
-        user_data: dict[str, Any] = requests.get(
+        user_data = requests.get(
             url=f"{self.api_url}/users/{username}",
             headers={
                 "Accept": "application/vnd.github+json",
                 "Authorization": f"Bearer {self.access_token}",
             },
-        ).json()
+        )
+
+        if user_data.status_code != 200:
+            logger.error(
+                "Error fetching user data",
+                status_code=user_data.status_code,
+                reason=user_data.reason,
+            )
+            # TODO Custom Exceptions
+            raise Exception("Error fetching user data")
+
+        user_data_json: dict[str, Any] = user_data.json()
 
         return UserData(
             username=username,
-            user_name=user_data["name"],
-            user_email=user_data["email"],
+            user_name=user_data_json["name"],
+            user_email=user_data_json["email"],
         )

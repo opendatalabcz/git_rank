@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from git_rank.git_rank.models.user_data import UserData
+from git_rank.models.user_data import UserData
 
 
 @dataclass

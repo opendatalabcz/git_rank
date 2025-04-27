@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query"
 import { useState } from "react"
-import { Button, Form, Input, Label, Spinner } from "reactstrap"
+import { Alert, Button, Form, Input, Label, Spinner } from "reactstrap"
 import axios from "axios"
 
 // import mock_data from "../mock_data/result.txt"
@@ -68,11 +68,11 @@ export default function Root() {
     )}
 
     {isError && (
-      <div>
+      <Alert color="danger">
         Error while getting report: {error.message}
         <br/>
         {error.stack}
-      </div>
+      </Alert>
     )}
   </div>
   );
