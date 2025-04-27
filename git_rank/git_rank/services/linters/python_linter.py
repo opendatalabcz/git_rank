@@ -11,7 +11,7 @@ from git_rank.services.linters.abstract_linter import AbstractLinter
 
 logger = get_logger()
 
-PYLINT_RANK_PATTERN = "[0-9]\.[0-9]+\/10"
+PYLINT_RANK_PATTERN = r"[0-9]\.[0-9]+\/10"
 
 
 class PythonLinter(AbstractLinter):
