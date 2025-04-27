@@ -31,6 +31,7 @@ export default function Root() {
     enabled: shouldFetch,
     refetchOnWindowFocus: false,
     staleTime: 1000 * 60 * 10, // 10 minutes
+    retry: false,
   })
 
   const handleSubmit = (e: React.FormEvent) => {
