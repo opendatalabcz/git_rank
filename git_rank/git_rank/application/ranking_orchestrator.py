@@ -64,8 +64,8 @@ class RankingOrchestrator:
             log.exception("rank_user.error")
             # TODO Custom Exceptions
             raise Exception("Error while ranking user")
-
-        self.repository_cleaner.remove_repositories_by_user(username)
+        finally:
+            self.repository_cleaner.remove_repositories_by_user(username)
 
         log.info("rank_user.end")
         return UserStatistics(

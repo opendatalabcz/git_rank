@@ -4,7 +4,8 @@ import tempfile
 from io import StringIO
 
 from git import Commit, PathLike
-from pylint import epylint
+from pylint.lint import Run
+from pylint.reporters.text import TextReporter
 from structlog import get_logger
 
 from git_rank.services.linters.abstract_linter import AbstractLinter
@@ -26,17 +27,18 @@ class PythonLinter(AbstractLinter):
             tmp_commit_file.flush()
 
             try:
-                lint_results: tuple[StringIO, StringIO] = epylint.py_run(
-                    command_options=tmp_commit_file.name + " " + self.arguments, return_std=True
+                lint_results = StringIO()
+                Run(
+                    args=[self.arguments, tmp_commit_file.name],
+                    reporter=TextReporter(lint_results),
+                    exit=False,
                 )
 
                 # Parse Pylint score (x/10) from the output
-                lint_result = re.findall(PYLINT_RANK_PATTERN, lint_results[0].getvalue())
+                lint_result = re.findall(PYLINT_RANK_PATTERN, lint_results.getvalue())
                 if lint_result:
                     lint_score = float(str(lint_result[-1]).split("/")[0])
-                    log.debug(
-                        f"lint_commit_file_python.result.stdout: {lint_results[0].getvalue()}"
-                    )
+                    log.debug(f"lint_commit_file_python.result.stdout: {lint_results.getvalue()}")
                 else:
                     lint_score = 10
 
