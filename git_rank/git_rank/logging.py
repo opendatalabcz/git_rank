@@ -7,6 +7,9 @@ from structlog.types import EventDict, WrappedLogger
 
 
 def init_logging(config):
+    """
+    Initialize logging configuration.
+    """
     pre_chain = [
         structlog.stdlib.add_log_level,
         structlog.stdlib.ExtraAdder(),

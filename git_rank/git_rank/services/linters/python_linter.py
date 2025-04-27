@@ -20,6 +20,7 @@ class PythonLinter(AbstractLinter):
         log = logger.bind(file=file)
         log.debug("lint_commit_file_python.start")
 
+        # Use temporary file to isolate the commit file
         with tempfile.NamedTemporaryFile(mode="w", suffix=".py", delete=False) as tmp_commit_file:
             tmp_commit_file.write(commit.tree[str(file)].data_stream.read().decode("utf8"))
             tmp_commit_file.flush()
@@ -29,6 +30,7 @@ class PythonLinter(AbstractLinter):
                     command_options=tmp_commit_file.name + " " + self.arguments, return_std=True
                 )
 
+                # Parse Pylint score (x/10) from the output
                 lint_result = re.findall(PYLINT_RANK_PATTERN, lint_results[0].getvalue())
                 if lint_result:
                     lint_score = float(str(lint_result[-1]).split("/")[0])

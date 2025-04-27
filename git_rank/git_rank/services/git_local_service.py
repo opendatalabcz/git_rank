@@ -9,6 +9,8 @@ logger = get_logger()
 
 
 class GitLocalService:
+    """Service to manage local repositories."""
+
     def __init__(self, git_local_repository: GitLocalRepository):
         self.git_local_repository = git_local_repository
 
@@ -27,6 +29,7 @@ class GitLocalService:
 
         user_commits: list[Commit] = []
         for commit in local_repository.repository.iter_commits():
+            # Compare with both name and email to account for different configurations
             if (
                 commit.author.name == local_repository.user.user_name
                 or commit.author.name == local_repository.user.username

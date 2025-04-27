@@ -8,11 +8,22 @@ logger = get_logger()
 
 
 class RepositoryCloner:
+    """
+    Clones repositories from a remote Git service to a local directory.
+    """
+
     def __init__(self, git_remote_service: GitRemoteService, git_local_service: GitLocalService):
         self.git_remote_service = git_remote_service
         self.git_local_service = git_local_service
 
     def clone_repositories(self, username: str) -> list[LocalRepository]:
+        """
+        Clones all repositories for a given user from a remote Git service to a local directory.
+        Args:
+            username (str): The username of the user whose repositories are to be cloned.
+        Returns:
+            list[LocalRepository]: A list of LocalRepository objects representing the cloned repositories.
+        """
         log = logger.bind(username=username)
         log.debug("clone_repositories.start")
 
@@ -25,6 +36,14 @@ class RepositoryCloner:
         return local_repositories
 
     def clone_user_repository(self, username: str, repository_url: str) -> LocalRepository:
+        """
+        Clones a specific repository for a given user from a remote Git service to a local directory.
+        Args:
+            username (str): The username of the user whose repository is to be cloned.
+            repository_url (str): The URL of the repository to be cloned.
+        Returns:
+            LocalRepository: A LocalRepository object representing the cloned repository.
+        """
         log = logger.bind(username=username, repository_url=repository_url)
         log.debug("clone_user_repository.start")
 

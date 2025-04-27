@@ -18,6 +18,10 @@ logger = get_logger()
 
 
 class StatisticsAnalyzer:
+    """
+    Class responsible for analyzing the statistics of a local repository.
+    """
+
     def __init__(self, git_local_service: GitLocalService, linter_service: LinterService):
         self.git_local_service = git_local_service
         self.linter_service = linter_service
@@ -47,6 +51,9 @@ class StatisticsAnalyzer:
     def analyze_cross_repository_statistics(
         self, user_repositories_statistics: list[RepositoryStatistics]
     ) -> RepositoryStatistics | None:
+        """
+        Aggregates the cross-repository statistics from list of previously computed statistics of given repositories.
+        """
         logger.debug("analyze_cross_repository_statistics.start")
 
         if len(user_repositories_statistics) == 1:
@@ -90,6 +97,9 @@ class StatisticsAnalyzer:
         return commits_statistics
 
     def _analyze_commit(self, commit: Commit) -> CommitStatistics:
+        """
+        Analyzes a single commit and returns the commit statistics.
+        """
         commit_statistics = CommitStatistics(
             commit_sha=commit.hexsha, commit_date=datetime.fromtimestamp(commit.committed_date)
         )
@@ -107,6 +117,7 @@ class StatisticsAnalyzer:
 
                 lint_score = self._lint_file(commit, commit_file[0], technology)
 
+                # If modified calculate the difference in lint score from the parent commit
                 if commit_file[1]["change_type"] == "M":
                     lint_score_before = self._lint_file(
                         commit.parents[0], commit_file[0], technology
@@ -136,6 +147,9 @@ class StatisticsAnalyzer:
     def _analyze_technologies(
         self, commit_statistics: list[CommitStatistics]
     ) -> list[TechnologyStatistics]:
+        """
+        Analyzes the technologies used in previously analyzed commits and returns the technology statistics.
+        """
         technology_statistics: dict[TechnologyType, TechnologyStatistics] = {}
         technology_weeks = defaultdict(set)
 

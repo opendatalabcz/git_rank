@@ -11,6 +11,14 @@ logger = get_logger()
 
 
 class RankingOrchestrator:
+    """
+    The orchestrator is responsible for coordinating the ranking process.
+    Args:
+        repository_cloner (RepositoryCloner): Class responsible for cloning repositories.
+        statistics_analyzer (StatisticsAnalyzer): Class responsible for analyzing repositories.
+        repository_cleaner (RepositoryCleaner): Class responsible for removing repositories.
+    """
+
     def __init__(
         self,
         repository_cloner: RepositoryCloner,
@@ -22,6 +30,13 @@ class RankingOrchestrator:
         self.repository_cleaner = repository_cleaner
 
     def rank_user(self, username: str) -> UserStatistics:
+        """
+        Rank a user by analyzing their repositories.
+        Args:
+            username (str): The username of the user to rank.
+        Returns:
+            UserStatistics: The statistics of the user and their repositories.
+        """
         log = logger.bind(username=username)
         log.info("rank_user.start")
 
@@ -58,6 +73,14 @@ class RankingOrchestrator:
         )
 
     def rank_user_repository(self, username: str, repository_url: str) -> UserStatistics:
+        """
+        Rank a user by analyzing a specific repository.
+        Args:
+            username (str): The username of the user to rank.
+            repository_url (str): The URL of the repository to analyze.
+        Returns:
+            UserStatistics: The statistics of the user and their repository.
+        """
         log = logger.bind(username=username, repository_url=repository_url)
         log.info("rank_repository.start")
 

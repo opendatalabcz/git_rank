@@ -6,6 +6,8 @@ from git_rank.repositories.git_remote.abstract_git_remote_repository import (
 
 
 class GitRemoteService:
+    """Service to manage remote repositories."""
+
     def __init__(self, git_remote_repository: AbstractGitRemoteRepository):
         self.git_remote_repository = git_remote_repository
 

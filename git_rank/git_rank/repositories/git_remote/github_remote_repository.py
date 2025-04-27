@@ -13,6 +13,8 @@ logger = get_logger()
 
 
 class GithubConfig(TypedDict):
+    """Configuration for Github API access."""
+
     access_token: str
     api_url: str
     user_repo_relation: str
@@ -20,6 +22,7 @@ class GithubConfig(TypedDict):
 
 
 class GithubRemoteRepository(AbstractGitRemoteRepository):
+    """GitHub platform implementation."""
 
     def __init__(self, github_config: GithubConfig) -> None:
         self.access_token = github_config["access_token"]
@@ -84,10 +87,12 @@ class GithubRemoteRepository(AbstractGitRemoteRepository):
         return RemoteRepository(
             clone_url=repository_url,
             full_name=repository_url.split(".git")[0].split("/")[-1],
-            user = user_data,
+            user=user_data,
         )
 
     def _get_github_user_data(self, username: str) -> UserData:
+        """Fetches user data from Github API."""
+
         user_data: dict[str, Any] = requests.get(
             url=f"{self.api_url}/users/{username}",
             headers={

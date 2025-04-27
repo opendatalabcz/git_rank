@@ -7,6 +7,10 @@ logger = get_logger()
 
 
 class RepositoryCleaner:
+    """
+    Class to remove repositories from the local file system.
+    """
+
     def __init__(self, git_local_service: GitLocalService):
         self.git_local_service = git_local_service
 

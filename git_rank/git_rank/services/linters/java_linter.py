@@ -18,6 +18,7 @@ class JavaLinter(AbstractLinter):
         log = logger.bind(file=file)
         log.debug("lint_commit_file_java.start")
 
+        # Use temporary file to isolate the commit file
         with tempfile.NamedTemporaryFile(mode="w", suffix=".java", delete=False) as tmp_commit_file:
             tmp_commit_file.write(commit.tree[str(file)].data_stream.read().decode("utf8"))
             tmp_commit_file.flush()
