@@ -34,12 +34,12 @@ mypy-extensions = "^1.0.0"
 pre-commit = "^2.15.0"
 pydocstyle = "^6.1.1"
 pylint = "^3.3.0"
-pytest = "^6.2.5"
+pytest = "^8.3.5"
 pyupgrade = "^2.29.1"
-coverage = "^6.1.2"
+coverage = "^7.5.0"
 coverage-badge = "^1.1.0"
-pytest-html = "^3.1.1"
-pytest-cov = "^3.0.0"
+pytest-html = "^4.1.1"
+pytest-cov = "^6.1.1"
 
 [tool.black]
 # https://github.com/psf/black
@@ -104,7 +104,6 @@ warn_unused_ignores = true
 
 
 [tool.pytest.ini_options]
-# https://docs.pytest.org/en/6.2.x/customize.html#pyproject-toml
 # Directories that are not visited by pytest collector:
 norecursedirs =["hooks", "*.egg", ".eggs", "dist", "build", "docs", ".tox", ".git", "__pycache__"]
 doctest_optionflags = ["NUMBER", "NORMALIZE_WHITESPACE", "IGNORE_EXCEPTION_DETAIL"]
