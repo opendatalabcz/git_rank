@@ -3,6 +3,7 @@ from typing import Any, TypedDict
 import requests
 from structlog import get_logger
 
+from git_rank.git_rank.models.user_data import UserData
 from git_rank.models.remote_repository import RemoteRepository
 from git_rank.repositories.git_remote.abstract_git_remote_repository import (
     AbstractGitRemoteRepository,
@@ -67,9 +68,7 @@ class GithubRemoteRepository(AbstractGitRemoteRepository):
                     lambda remote_repository: RemoteRepository(
                         clone_url=remote_repository["clone_url"],
                         full_name=remote_repository["full_name"],
-                        username=username,
-                        user_name=user_data["name"],
-                        user_email=user_data["email"],
+                        user=user_data,
                     ),
                     repositories_page_json,
                 )
@@ -85,12 +84,10 @@ class GithubRemoteRepository(AbstractGitRemoteRepository):
         return RemoteRepository(
             clone_url=repository_url,
             full_name=repository_url.split(".git")[0].split("/")[-1],
-            username=username,
-            user_name=user_data["name"],
-            user_email=user_data["email"],
+            user = user_data,
         )
 
-    def _get_github_user_data(self, username: str) -> dict[str, Any]:
+    def _get_github_user_data(self, username: str) -> UserData:
         user_data: dict[str, Any] = requests.get(
             url=f"{self.api_url}/users/{username}",
             headers={
@@ -99,4 +96,8 @@ class GithubRemoteRepository(AbstractGitRemoteRepository):
             },
         ).json()
 
-        return user_data
+        return UserData(
+            username=username,
+            user_name=user_data["name"],
+            user_email=user_data["email"],
+        )

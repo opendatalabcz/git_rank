@@ -1,10 +1,10 @@
 from dataclasses import dataclass
 
+from git_rank.git_rank.models.user_data import UserData
+
 
 @dataclass
 class RemoteRepository:
     clone_url: str
     full_name: str
-    username: str
-    user_name: str
-    user_email: str
+    user: UserData

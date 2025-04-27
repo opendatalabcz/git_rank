@@ -28,9 +28,9 @@ class GitLocalService:
         user_commits: list[Commit] = []
         for commit in local_repository.repository.iter_commits():
             if (
-                commit.author.name == local_repository.user_name
-                or commit.author.name == local_repository.username
-                or commit.author.email == local_repository.user_email
+                commit.author.name == local_repository.user.user_name
+                or commit.author.name == local_repository.user.username
+                or commit.author.email == local_repository.user.user_email
             ):
                 user_commits.append(commit)
 

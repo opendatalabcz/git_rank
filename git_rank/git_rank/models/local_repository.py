@@ -2,11 +2,11 @@ from dataclasses import dataclass
 
 from git import Repo
 
+from git_rank.git_rank.models.user_data import UserData
+
 
 @dataclass
 class LocalRepository:
     repository: Repo
     full_name: str
-    username: str
-    user_name: str
-    user_email: str
+    user: UserData
