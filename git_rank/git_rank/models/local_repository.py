@@ -9,3 +9,4 @@ class LocalRepository:
     full_name: str
     username: str
     user_name: str
+    user_email: str

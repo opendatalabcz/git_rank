@@ -1,4 +1,4 @@
-from typing import TypedDict
+from typing import Any, TypedDict
 
 import requests
 from structlog import get_logger
@@ -30,7 +30,7 @@ class GithubRemoteRepository(AbstractGitRemoteRepository):
         log = logger.bind(username=username)
         log.debug("get_repositories_by_user.start")
 
-        user_name = self._get_github_user_name(username)
+        user_data = self._get_github_user_data(username)
 
         page = 1
         remote_repositories = []
@@ -68,7 +68,8 @@ class GithubRemoteRepository(AbstractGitRemoteRepository):
                         clone_url=remote_repository["clone_url"],
                         full_name=remote_repository["full_name"],
                         username=username,
-                        user_name=user_name,
+                        user_name=user_data["name"],
+                        user_email=user_data["email"],
                     ),
                     repositories_page_json,
                 )
@@ -79,21 +80,23 @@ class GithubRemoteRepository(AbstractGitRemoteRepository):
         return remote_repositories
 
     def get_user_repository_by_url(self, username: str, repository_url: str) -> RemoteRepository:
-        user_name = self._get_github_user_name(username)
+        user_data = self._get_github_user_data(username)
+
         return RemoteRepository(
             clone_url=repository_url,
             full_name=repository_url.split(".git")[0].split("/")[-1],
             username=username,
-            user_name=user_name,
+            user_name=user_data["name"],
+            user_email=user_data["email"],
         )
 
-    def _get_github_user_name(self, username: str) -> str:
-        return str(
-            requests.get(
-                url=f"{self.api_url}/users/{username}",
-                headers={
-                    "Accept": "application/vnd.github+json",
-                    "Authorization": f"Bearer {self.access_token}",
-                },
-            ).json()["name"]
-        )
+    def _get_github_user_data(self, username: str) -> dict[str, Any]:
+        user_data: dict[str, Any] = requests.get(
+            url=f"{self.api_url}/users/{username}",
+            headers={
+                "Accept": "application/vnd.github+json",
+                "Authorization": f"Bearer {self.access_token}",
+            },
+        ).json()
+
+        return user_data

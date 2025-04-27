@@ -30,6 +30,7 @@ class GitLocalService:
             if (
                 commit.author.name == local_repository.user_name
                 or commit.author.name == local_repository.username
+                or commit.author.email == local_repository.user_email
             ):
                 user_commits.append(commit)
 

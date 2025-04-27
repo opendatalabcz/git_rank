@@ -19,6 +19,7 @@ class GitLocalRepository:
             full_name=remote_repository.full_name,
             username=remote_repository.username,
             user_name=remote_repository.user_name,
+            user_email=remote_repository.user_email,
         )
 
         return repo
