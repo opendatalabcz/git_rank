@@ -14,7 +14,7 @@ def commit_tree_fixture() -> MagicMock:
     file = MagicMock()
     data_stream = MagicMock()
 
-    data_stream.read.return_value = b"print('Hello World')"
+    data_stream.read.return_value = b"print('Hello World')\n\n\n\n\n\n\n\n\n\n"
     file.data_stream = data_stream
     commit_tree.__getitem__.return_value = file
 
