@@ -86,7 +86,7 @@ class GithubRemoteRepository(AbstractGitRemoteRepository):
 
         return RemoteRepository(
             clone_url=repository_url,
-            full_name=repository_url.split(".git")[0].split("/")[-1],
+            full_name=repository_url.split("/")[-1].split(".git")[0],
             user=user_data,
         )
 
