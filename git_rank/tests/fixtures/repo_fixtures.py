@@ -1,5 +1,7 @@
 from typing import cast
 
+from datetime import datetime
+from pathlib import Path
 from unittest.mock import MagicMock, create_autospec
 
 import pytest
@@ -22,11 +24,30 @@ def commit_tree_fixture() -> MagicMock:
 
 
 @pytest.fixture(name="commit_fixture")
-def commit_fixture(commit_tree_fixture: MagicMock) -> MagicMock:
+def commit_fixture(
+    commit_tree_fixture: MagicMock, commit_another_author_fixture: Commit
+) -> MagicMock:
     commit = cast(MagicMock, create_autospec(Commit, instance=True))
     commit.author.name = TEST_USER_NAME
     commit.author.email = TEST_USER_EMAIL
     commit.tree = commit_tree_fixture
+    commit.stats.files = {
+        Path("/path/to/added_file.py"): {
+            "change_type": "A",
+            "lines": 10,
+            "insertions": 10,
+            "deletions": 0,
+        },
+        Path("/path/to/modified_file.py"): {
+            "change_type": "M",
+            "lines": 20,
+            "insertions": 15,
+            "deletions": 5,
+        },
+    }
+    commit.parents = [commit_another_author_fixture]
+    commit.hexsha = "TEST_COMMIT_SHA"
+    commit.committed_date = datetime(2000, 12, 1, 12, 13, 14).timestamp()
 
     return commit
 
