@@ -82,13 +82,16 @@ class GithubRemoteRepository(AbstractGitRemoteRepository):
         return remote_repositories
 
     def get_user_repository_by_url(self, username: str, repository_url: str) -> RemoteRepository:
-        user_data = self._get_github_user_data(username)
-
-        return RemoteRepository(
-            clone_url=repository_url,
-            full_name=repository_url.split("/")[-1].split(".git")[0],
-            user=user_data,
+        repository = super().get_user_repository_by_url(
+            username=username, repository_url=repository_url
         )
+        try:
+            user_data = self._get_github_user_data(username)
+            repository.user = user_data
+        except Exception as e:
+            logger.warning("Error fetching user data from GitHub.", username=username)
+
+        return repository
 
     def _get_github_user_data(self, username: str) -> UserData:
         """Fetches user data from Github API."""

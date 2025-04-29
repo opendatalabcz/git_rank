@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 
 from git_rank.models.remote_repository import RemoteRepository
+from git_rank.models.user_data import UserData
 
 
 class AbstractGitRemoteRepository(ABC):
@@ -20,14 +21,9 @@ class AbstractGitRemoteRepository(ABC):
         """
         pass
 
-    @abstractmethod
     def get_user_repository_by_url(self, username: str, repository_url: str) -> RemoteRepository:
-        """
-        Get a specific repository for a given user by URL.
-        Args:
-            username (str): The username of the user.
-            repository_url (str): The URL of the repository.
-        Returns:
-            A RemoteRepository object representing the found git repository and users metadata.
-        """
-        pass
+        return RemoteRepository(
+            clone_url=repository_url,
+            full_name=repository_url.split("/")[-1].split(".git")[0],
+            user=UserData(username=username, user_name=username, user_email=None),
+        )
