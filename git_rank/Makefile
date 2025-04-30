@@ -2,15 +2,19 @@
 SHELL := /usr/bin/env bash
 PYTHON := python
 PYTHONPATH := `pwd`
+POETRY_VERSION := 1.3.0
 
 # Docker variables
 IMAGE := git_rank
 VERSION := latest
 
+# Linters variables
+PMD_VERSION := 7.11.0
+
 # Poetry
 .PHONY: poetry-download
 poetry-download:
-	curl -sSL https://install.python-poetry.org | $(PYTHON) - --version 1.3.0
+	curl -sSL https://install.python-poetry.org | $(PYTHON) - --version $(POETRY_VERSION)
 
 .PHONY: poetry-remove
 poetry-remove:
@@ -31,6 +35,17 @@ install:
 .PHONY: pre-commit-install
 pre-commit-install:
 	poetry run pre-commit install
+
+.PHONY: pmd-install
+pmd_install:
+	cd $(HOME)
+	wget https://github.com/pmd/pmd/releases/download/pmd_releases%2F$(PMD_VERSION)/pmd-dist-$(PMD_VERSION)-bin.zip
+	unzip pmd-dist-$(PMD_VERSION)-bin.zip
+	alias pmd="$(HOME)/pmd-bin-$(PMD_VERSION)/bin/pmd"
+	pmd --version
+
+.PHONY: linters-install
+linters-install: pmd-install
 
 # Formatters
 .PHONY: codestyle
