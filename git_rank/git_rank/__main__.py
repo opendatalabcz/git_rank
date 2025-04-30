@@ -20,7 +20,7 @@ def create_application(application_container: ApplicationContainer) -> FastAPI:
     fast_api = application_container.fast_api()
     fast_api.add_middleware(
         CORSMiddleware,
-        allow_origins=["http://localhost:8091"],
+        allow_origins=["*"],
         allow_credentials=True,
         allow_methods=["GET"],
         allow_headers=["*"],
