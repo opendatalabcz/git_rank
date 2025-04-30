@@ -38,6 +38,8 @@ export default function RepositoryOverview({ repositoryStatistics }: {repository
             <p>User commits: {repositoryStatistics.user_commits}</p>
             <Button color="secondary" id="commit_toggler">Collapse commits</Button>
             <UncontrolledCollapse toggler="#commit_toggler">
+                {/* https://github.com/reactstrap/reactstrap/issues/2785 */}
+                {/* @ts-expect-error Known Reactstrap issue */}
                 <UncontrolledAccordion stayOpen>
                     {repositoryStatistics.commits.map(commit => (
                         <AccordionItem key={commit.commit_sha}>

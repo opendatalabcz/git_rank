@@ -11,6 +11,8 @@ export default function CommitOverview({ commitStatistics }: { commitStatistics:
             <p>Average change lint score: {commitStatistics.average_change_lint_score}</p>
             <p>Committed: {dayjs(commitStatistics.commit_date).format(DATE_FORMAT)}</p>
             <h4>Files</h4>
+            {/* https://github.com/reactstrap/reactstrap/issues/2785 */}
+            {/* @ts-expect-error Known Reactstrap issue*/}
             <UncontrolledAccordion stayOpen>
                 {commitStatistics.files.map(file => (
                     <AccordionItem key={file.file_name}>
