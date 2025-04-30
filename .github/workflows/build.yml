@@ -5,6 +5,9 @@ on: [push, pull_request]
 jobs:
   lint_git_rank:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: git_rank
     strategy:
       matrix:
         python-version: ["3.11"]
@@ -16,9 +19,6 @@ jobs:
       uses: actions/setup-python@v2.2.2
       with:
         python-version: ${{ matrix.python-version }}
-
-    - name: Change working directory
-      run: cd git_rank
 
     - name: Install poetry
       run: make poetry-download
