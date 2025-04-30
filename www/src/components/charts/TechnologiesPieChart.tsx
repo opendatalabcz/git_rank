@@ -1,10 +1,11 @@
 import ReactApexChart from "react-apexcharts"
 import {ITechnologyStatistics } from "../../types"
+import { ApexOptions } from "apexcharts"
 
 export default function TechnologiesPieChart({ technologies }: {technologies: ITechnologyStatistics[]}) {
           
     const series = technologies.map(technology => technology.total_changes)
-    const options = {
+    const options: ApexOptions = {
       chart: {
         type: 'donut',
       },

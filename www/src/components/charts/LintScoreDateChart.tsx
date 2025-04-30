@@ -1,5 +1,6 @@
 import ReactApexChart from "react-apexcharts"
 import { ICommitStatistics } from "../../types"
+import { ApexOptions } from "apexcharts"
 
 export default function LintScoreDateChart({ commits }: {commits: ICommitStatistics[]}) {
 
@@ -20,7 +21,7 @@ export default function LintScoreDateChart({ commits }: {commits: ICommitStatist
         {name: "ADDED", data: add_lint},
         {name: "CHANGED", data: change_lint}
     ]
-    const options = {
+    const options: ApexOptions = {
           chart: {
             zoom: {
               enabled: true,

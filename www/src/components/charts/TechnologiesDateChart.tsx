@@ -1,10 +1,11 @@
 import ReactApexChart from "react-apexcharts"
 import { ICommitStatistics } from "../../types"
+import { ApexOptions } from "apexcharts";
 
 export default function CommitsDateChart({ commits }: {commits: ICommitStatistics[]}) {
 
     const series = Array.from(prepareData(commits).entries()).map(([key, value]) => ({name: key, data: aggregateData(value)}))
-    const options = {
+    const options: ApexOptions = {
           chart: {
             zoom: {
               enabled: true,
