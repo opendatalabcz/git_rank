@@ -3,7 +3,6 @@ import { useState } from "react"
 import { Alert, Button, Form, Input, Label, Spinner } from "reactstrap"
 import axios from "axios"
 
-// import mock_data from "../mock_data/result.txt"
 import { IUserStatistics } from "../types"
 import { Navigate } from "react-router"
 
@@ -17,16 +16,25 @@ const client = axios.create({
 
 export default function Root() {
   const [username, setUsername] = useState('')
+  const [repository, setRepository] = useState('')
   const [shouldFetch, setShouldFetch] = useState(false)
 
   const { isLoading, isError, isSuccess, data, error }= useQuery({
-    queryKey: ['status', username],
+    queryKey: ['status', username, repository],
     queryFn: async () => {
-      const response = await client.get(`/rank/${username}`)
+      let response;
+      if (repository != '') {
+        response = await client.get(`/rank/${username}/repository`, {
+          params: {
+            repository_url: repository
+          }
+        });
+      }
+      else {
+        response = await client.get(`/rank/${username}`)
+      }
       setShouldFetch(false)
       return response.data as IUserStatistics
-      // mock data fetching
-      //return fetch(mock_data).then(r => r.json()).then(r => r as IUserStatistics)
     },
     enabled: shouldFetch,
     refetchOnWindowFocus: false,
@@ -52,6 +60,15 @@ export default function Root() {
           required
           value={username}
           onChange={(e) => setUsername(e.target.value)}
+        />
+        <Label htmlFor="repository">
+          Repository URL (optional):
+        </Label>
+        <Input
+          id="repository"
+          type="url"
+          value={repository}
+          onChange={(e) => setRepository(e.target.value)}
         />
 
       <Button 
