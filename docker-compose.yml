@@ -1,0 +1,14 @@
+services:
+  git-rank:
+    build:
+      context: ./git_rank
+      dockerfile: ./docker/Dockerfile
+    restart: on-failure
+    environment:
+      - SERVER_HOST=localhost
+      - SERVER_PORT=8090
+    env_file:
+      - ./git_rank/.env
+    ports:
+      - "8090:8090"
+    
