@@ -5,10 +5,22 @@ services:
       dockerfile: ./docker/Dockerfile
     restart: on-failure
     environment:
-      - SERVER_HOST=localhost
+      - SERVER_HOST=0.0.0.0
       - SERVER_PORT=8090
     env_file:
       - ./git_rank/.env
     ports:
       - "8090:8090"
+
+  git-rank-www:
+    build:
+      context: ./www
+      dockerfile: ./docker/Dockerfile
+      args:
+        - VITE_GIT_RANK_API_URL=http://localhost:8090
+    depends_on:
+      - git-rank
+    restart: on-failure
+    ports:
+      - "8091:80"
     
