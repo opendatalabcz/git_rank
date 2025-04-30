@@ -43,6 +43,6 @@ git_remote:
     
 linters:
   python:
-    arguments: "--disable=E0401"
+    arguments: "--disable=E0401,I1101"
   java:
     arguments: "-f json -R rulesets/java/quickstart.xml"
