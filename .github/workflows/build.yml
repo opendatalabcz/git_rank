@@ -27,7 +27,7 @@ jobs:
       uses: actions/cache@v4
       with:
         path: git_rank/.venv
-        key: venv-${{ matrix.python-version }}-${{ hashFiles('pyproject.toml') }}-${{ hashFiles('poetry.lock') }}
+        key: venv-${{ matrix.python-version }}-${{ hashFiles('git_rank/pyproject.toml') }}-${{ hashFiles('git_rank/poetry.lock') }}
     
     - name: Install dependencies
       run: |
