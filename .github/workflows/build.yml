@@ -10,14 +10,15 @@ jobs:
         python-version: ["3.11"]
 
     steps:
-    - name: Change working directory
-      run: cd git_rank
-
     - uses: actions/checkout@v2
+    
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v2.2.2
       with:
         python-version: ${{ matrix.python-version }}
+
+    - name: Change working directory
+      run: cd git_rank
 
     - name: Install poetry
       run: make poetry-download
