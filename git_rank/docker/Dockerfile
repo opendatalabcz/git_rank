@@ -28,12 +28,22 @@ COPY . /src
 # ------------- Runtime stage --------------------
 FROM base AS runtime
 ENV JAVA_HOME=/usr/lib/jvm/default-java \
-  PATH=$PATH:/usr/local/pmd-bin/bin
+  PATH=$PATH:/usr/local/pmd-bin/bin:~/.dotnet/tools \
+  ROSLYNATOR_VERSION=0.10.1
 
 # Install Java runtime for PMD and git for GitPython
 RUN apt-get update && \
-  apt-get install -y default-jre-headless git && \
+  apt-get install -y default-jre-headless git wget && \
   apt-get clean
+
+# Install dotnet runtime for Roslynator linter
+RUN wget https://packages.microsoft.com/config/debian/12/packages-microsoft-prod.deb -O packages-microsoft-prod.deb && \
+  dpkg -i packages-microsoft-prod.deb && \ 
+  rm packages-microsoft-prod.deb && \
+  apt-get update && \
+  apt-get install -y dotnet-sdk-9.0 && \
+  apt-get clean && \
+  dotnet tool install roslynator.dotnet.cli --version ${ROSLYNATOR_VERSION} --tool-path /usr/local/bin
 
 COPY --from=builder /runtime /usr/local
 COPY . /app
