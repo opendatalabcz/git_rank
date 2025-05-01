@@ -6,6 +6,7 @@ from enum import Enum
 class TechnologyType(Enum):
     PYTHON = "PYTHON"
     JAVA = "JAVA"
+    CS = "C#"
     OTHER = "OTHER"
 
 
@@ -22,6 +23,7 @@ class TechnologyStatistics:
         extension_mapping = {
             ".py": TechnologyType.PYTHON,
             ".java": TechnologyType.JAVA,
+            ".cs": TechnologyType.CS,
         }
 
         return extension_mapping.get(file_extension, TechnologyType.OTHER)

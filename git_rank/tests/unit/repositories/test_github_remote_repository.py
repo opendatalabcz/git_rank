@@ -86,7 +86,7 @@ def test_get_repositories_by_user(
 
     repositories = github_remote_repository_fixture.get_repositories_by_user(username=USERNAME)
 
-    requests_get_mock.call_count == 3
+    assert requests_get_mock.call_count == 3
     requests_get_mock.assert_any_call(
         url=f"{MOCK_GITHUB_CONFIG['api_url']}/users/{USERNAME}",
         headers={

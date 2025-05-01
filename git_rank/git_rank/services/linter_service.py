@@ -1,6 +1,7 @@
 from git import Commit, PathLike
 
 from git_rank.models.statistics.technology_statistics import TechnologyType
+from git_rank.services.linters.cs_linter import CSLinter
 from git_rank.services.linters.java_linter import JavaLinter
 from git_rank.services.linters.python_linter import PythonLinter
 
@@ -11,9 +12,10 @@ class LinterService:
     The service is responsible for running linters on files in a commit.
     """
 
-    def __init__(self, python_linter: PythonLinter, java_linter: JavaLinter):
+    def __init__(self, python_linter: PythonLinter, java_linter: JavaLinter, cs_linter: CSLinter):
         self.python_linter = python_linter
         self.java_linter = java_linter
+        self.cs_linter = cs_linter
 
     def lint_commit_file(self, commit: Commit, file: PathLike, technology: TechnologyType) -> float:
         """
@@ -32,5 +34,7 @@ class LinterService:
                 lint_score = self.python_linter.lint_commit_file(commit, file)
             case TechnologyType.JAVA:
                 lint_score = self.java_linter.lint_commit_file(commit, file)
+            case TechnologyType.CS:
+                lint_score = self.cs_linter.lint_commit_file(commit, file)
 
         return lint_score

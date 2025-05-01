@@ -37,15 +37,19 @@ pre-commit-install:
 	poetry run pre-commit install
 
 .PHONY: pmd-install
-pmd_install:
+pmd-install:
 	cd $(HOME)
 	wget https://github.com/pmd/pmd/releases/download/pmd_releases%2F$(PMD_VERSION)/pmd-dist-$(PMD_VERSION)-bin.zip
 	unzip pmd-dist-$(PMD_VERSION)-bin.zip
-	alias pmd="$(HOME)/pmd-bin-$(PMD_VERSION)/bin/pmd"
+	export PATH=$(PATH):"$(HOME)/pmd-bin-$(PMD_VERSION)/bin"
 	pmd --version
 
+.PHONY: roslynator-install
+roslynator-install:
+	dotnet tool install -g roslynator.dotnet.cli --version 0.10.1
+
 .PHONY: linters-install
-linters-install: pmd-install
+linters-install: pmd-install roslynator-install
 
 # Formatters
 .PHONY: codestyle
