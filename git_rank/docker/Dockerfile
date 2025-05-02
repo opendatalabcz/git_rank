@@ -45,6 +45,9 @@ RUN wget https://packages.microsoft.com/config/debian/12/packages-microsoft-prod
   apt-get clean && \
   dotnet tool install roslynator.dotnet.cli --version ${ROSLYNATOR_VERSION} --tool-path /usr/local/bin
 
+RUN useradd -r -m git_rank_service
+USER git_rank_service
+
 COPY --from=builder /runtime /usr/local
 COPY . /app
 WORKDIR /app

@@ -1,5 +1,6 @@
 services:
   git-rank:
+    container_name: git-rank
     build:
       context: ./git_rank
       dockerfile: ./docker/Dockerfile
@@ -13,6 +14,7 @@ services:
       - "8090:8090"
 
   git-rank-www:
+    container_name: git-rank-www
     build:
       context: ./www
       dockerfile: ./docker/Dockerfile
