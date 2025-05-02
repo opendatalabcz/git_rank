@@ -11,7 +11,7 @@
 
 </div>
 
-## Instalace
+## Lokální instalace
 
 1. Pokud nemáte nainstalované `Poetry`:
 
@@ -31,7 +31,13 @@ pip install poetry
 make install
 ```
 
-3. Spuštění projektu:
+3. Instalace potřebných linterů:
+
+```bash
+make linters-install
+```
+
+4. Spuštění projektu:
 
 ```bash
 ./entrypoint.sh
