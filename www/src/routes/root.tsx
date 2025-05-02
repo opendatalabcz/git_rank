@@ -1,8 +1,9 @@
 import { useQuery } from "@tanstack/react-query"
 import { useState } from "react"
-import { Alert, Button, Form, Input, Label, Spinner } from "reactstrap"
+import { Alert, Button, Card, CardBody, CardImg, CardText, CardTitle, Container, Form, Input, Label, Spinner } from "reactstrap"
 import axios from "axios"
 
+import git_rank_report from "../assets/git_rank_report.jpg"
 import { IUserStatistics } from "../types"
 import { Navigate } from "react-router"
 
@@ -22,7 +23,7 @@ export default function Root() {
   const { isLoading, isError, isSuccess, data, error }= useQuery({
     queryKey: ['status', username, repository],
     queryFn: async () => {
-      let response;
+      let response
       if (repository != '') {
         response = await client.get(`/rank/${username}/repository`, {
           params: {
@@ -48,10 +49,10 @@ export default function Root() {
   }
 
   return (
-    <div>
-    <h1 className="text-center">Git Rank</h1>
+  <Container fluid className="px-2 py-3">
+    <h1 className="text-center">GitRank</h1>
     <Form onSubmit={handleSubmit} className="input-form">
-        <Label htmlFor="username">
+        <Label htmlFor="username" className="input-form-label">
           Username:
         </Label>
         <Input
@@ -61,7 +62,7 @@ export default function Root() {
           value={username}
           onChange={(e) => setUsername(e.target.value)}
         />
-        <Label htmlFor="repository">
+        <Label htmlFor="repository" className="input-form-label">
           Repository URL (optional):
         </Label>
         <Input
@@ -70,15 +71,15 @@ export default function Root() {
           value={repository}
           onChange={(e) => setRepository(e.target.value)}
         />
-
       <Button 
         type="submit"
         disabled={isLoading}
         color="primary"
+        className="submit-button"
       >
         {isLoading ? "Generating report..." : 'Generate report'}
+        {isLoading ? (<Spinner color="light" size="sm"/>) : null}
       </Button>
-      {isLoading && <Spinner color="primary" size="sm"/>}
     </Form>
 
     {isSuccess && (
@@ -92,6 +93,19 @@ export default function Root() {
         {error.stack}
       </Alert>
     )}
-  </div>
+    <Card className="my-2 mt-4 text-center" color="light">
+      <CardBody>
+        <CardTitle tag="h2">
+          Co je GitRank?
+        </CardTitle>
+        <CardText>
+        <p>GitRank je software sloužící k analýze a hodnocení uživatelské práce ve veřejných repozitářích (aktuálně z platformy GitHub) a následnému zobrazování výsledných reportů.</p>
+        <p>Poskytuje tak vhled na dovednosti a návyky vývojářů, které nemusí být na první pohled patrné.</p>
+        <p>GitRank vznikl jako diplomová práce na Fakultě informačních technologií ČVUT ve spolupráci s OpenDataLab.</p>
+        </CardText>
+        <CardImg src={git_rank_report} style={{width: "70%"}}/>
+      </CardBody>
+    </Card>
+  </Container>
   );
 }
