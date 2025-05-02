@@ -4,7 +4,7 @@ import openDataLab from '../assets/opendatalab.svg'
 export default function Footer() {
     return (
         <footer>
-          <div className="p-2 mt-4 bg-light">
+          <div className="p-2 bg-light">
             <div className="row gx-3 align-items-center">
               <div className="col text-lg-start text-center">
                 <p className="mb-0">
