@@ -35,5 +35,33 @@ jobs:
         make install
 
     - name: Run lint
-      run: |
-        make lint
+      run: make lint
+    
+  lint_git_rank_www:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: www
+    strategy:
+      matrix:
+        node-version: ["23.x"]
+    
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+
+    - name: Set up cache
+      uses: actions/cache@v4
+      with:
+        path: www/node_modules
+        key: node_modules-${{ matrix.node-version }}-${{ hashFiles('www/package.json') }}-${{ hashFiles('www/package-lock.json') }}
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Run lint
+      run: npm run lint
