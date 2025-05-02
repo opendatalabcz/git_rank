@@ -21,14 +21,12 @@ export default function CommitsDateChart({ commits }: {commits: ICommitStatistic
           markers: {
             size: 10,
           },
-          title: {
-            text: 'Files changed in time',
-          },
         }
 
     return (
       <div className="chart">
         <div>
+            <b>File changes by technology in time</b>
             <ReactApexChart options={options} series={series} type="scatter" width={"100%"} height={"auto"}/>
           </div>
         <div id="html-dist"></div>

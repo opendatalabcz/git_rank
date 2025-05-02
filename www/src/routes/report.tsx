@@ -22,10 +22,8 @@ export default function Report() {
   }
 
   return (
-    <Container fluid className="px-4 py-3">
-      <UserOverview key={username} userStatistics={reportData}/>
-      <h1>Raw data</h1>
-      <pre>{JSON.stringify(reportData, null, 2)}</pre>
+  <Container fluid className="px-4 py-3">
+    <UserOverview key={username} userStatistics={reportData}/>
   </Container>
   )
 }

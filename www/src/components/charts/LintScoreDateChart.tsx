@@ -40,16 +40,14 @@ export default function LintScoreDateChart({ commits }: {commits: ICommitStatist
           stroke: {
             curve: 'smooth',
           },
-          title: {
-            text: 'Average lint scores in time',
-          },
         }
 
     return (
       <div className="chart">
         <div>
+            <b>Average lint scores in time</b>
             <ReactApexChart options={options} series={series} type="line" width={"100%"} height={"auto"}/>
-          </div>
+        </div>
         <div id="html-dist"></div>
       </div>
     );
