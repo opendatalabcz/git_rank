@@ -1,9 +1,10 @@
 import { useQuery } from "@tanstack/react-query"
 import { useState } from "react"
-import { Alert, Button, Card, CardBody, CardImg, CardText, CardTitle, Container, Form, Input, Label, Spinner } from "reactstrap"
+import { Alert, Button, Card, CardBody, CardImg, CardText, CardTitle, Col, Container, Form, Input, Label, Row, Spinner } from "reactstrap"
 import axios from "axios"
 
 import git_rank_report from "../assets/git_rank_report.jpg"
+import git_rank_report_files from "../assets/git_rank_report_files.png"
 import { IUserStatistics } from "../types"
 import { Navigate } from "react-router"
 
@@ -49,7 +50,7 @@ export default function Root() {
   }
 
   return (
-  <Container fluid className="px-2 py-3">
+  <Container className="px-2 py-3">
     <h1 className="text-center">GitRank</h1>
     <Form onSubmit={handleSubmit} className="input-form">
         <Label htmlFor="username" className="input-form-label">
@@ -58,6 +59,7 @@ export default function Root() {
         <Input
           id="username"
           type="text"
+          placeholder="GitHub_User"
           required
           value={username}
           onChange={(e) => setUsername(e.target.value)}
@@ -68,6 +70,7 @@ export default function Root() {
         <Input
           id="repository"
           type="url"
+          placeholder="https://www.github.com/username/repository"
           value={repository}
           onChange={(e) => setRepository(e.target.value)}
         />
@@ -93,17 +96,28 @@ export default function Root() {
         {error.stack}
       </Alert>
     )}
-    <Card className="my-2 mt-4 text-center" color="light">
+    <Card className="my-2 mt-4" color="light">
       <CardBody>
         <CardTitle tag="h2">
           Co je GitRank?
         </CardTitle>
         <CardText>
-        <p>GitRank je software sloužící k analýze a hodnocení uživatelské práce ve veřejných repozitářích (aktuálně z platformy GitHub) a následnému zobrazování výsledných reportů.</p>
-        <p>Poskytuje tak vhled na dovednosti a návyky vývojářů, které nemusí být na první pohled patrné.</p>
-        <p>GitRank vznikl jako diplomová práce na Fakultě informačních technologií ČVUT ve spolupráci s OpenDataLab.</p>
+        GitRank je software sloužící k analýze a hodnocení uživatelské práce ve veřejných repozitářích (aktuálně z platformy GitHub) a následnému zobrazování výsledných reportů.
         </CardText>
-        <CardImg src={git_rank_report} style={{width: "70%"}}/>
+        <CardText>
+        Poskytuje tak vhled na dovednosti a návyky vývojářů, které nemusí být na první pohled patrné.
+        </CardText>
+        <CardText>
+        GitRank vznikl jako diplomová práce na Fakultě informačních technologií ČVUT ve spolupráci s OpenDataLab.
+        </CardText>
+        <Row className="align-items-center">
+        <Col xs="12" md="8">
+        <CardImg alt="GitRank Report Example" src={git_rank_report}/>
+        </Col>
+        <Col xs="12" md="4">
+        <CardImg alt="GitRank Report Files Example" src={git_rank_report_files}/>
+        </Col>
+        </Row>
       </CardBody>
     </Card>
   </Container>
