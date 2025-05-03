@@ -34,6 +34,9 @@ class JavaLinter(AbstractLinter):
                         text=True,
                     )
 
+                    if result.returncode != 0 and result.returncode != 4:
+                        result.check_returncode()
+
                     result_json = json.loads(result.stdout)
                     result_files = result_json["files"]
 
@@ -47,11 +50,12 @@ class JavaLinter(AbstractLinter):
                             10.0 - ((float(5 * error_violations + other_violations) / lines) * 10),
                         )
                     else:
-                        lint_score = 0
+                        lint_score = 10
 
                 log.debug(f"lint_commit_file_java.result.score: {lint_score}")
             except:
                 log.exception("lint_commit_file_java.error")
+                lint_score = 0
             finally:
                 os.unlink(tmp_commit_file.name)
 

@@ -35,7 +35,8 @@ class CSLinter(AbstractLinter):
                     shell=True,
                     capture_output=False,
                     cwd=tmp_dir,
-                )
+                ).check_returncode()
+
                 with open(tmp_commit_file.name, "r") as f:
                     lines = sum(1 for _ in f)
 
@@ -44,7 +45,7 @@ class CSLinter(AbstractLinter):
                         shell=True,
                         capture_output=False,
                         cwd=tmp_dir,
-                    )
+                    ).check_returncode()
 
                 if os.path.exists(os.path.join(tmp_dir, OUTPUT_XML_FILE)):
                     with open(os.path.join(tmp_dir, OUTPUT_XML_FILE), "r") as r:
@@ -73,6 +74,7 @@ class CSLinter(AbstractLinter):
                 log.debug(f"lint_commit_file_cs.result.score: {lint_score}")
             except:
                 log.exception("lint_commit_file_cs.error")
+                lint_score = 0
             finally:
                 os.unlink(tmp_commit_file.name)
 

@@ -44,4 +44,4 @@ def test_lint_commit_file_empty(
     result = java_linter_fixture.lint_commit_file(commit=commit_fixture, file="test.java")
     subprocess_run_mock.assert_called_once()
     assert "pmd check" in subprocess_run_mock.call_args[0][0]
-    assert result == 0.0
+    assert result == 10.0
