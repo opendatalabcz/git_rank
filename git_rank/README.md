@@ -31,7 +31,7 @@ pip install poetry
 make install
 ```
 
-3. Instalace potřebných linterů:
+3. Instalace potřebných linterů (je potřeba mít Java a .NET runtime):
 
 ```bash
 make linters-install

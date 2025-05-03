@@ -30,6 +30,12 @@ Pro sestavení images se všemi potřebnými závislostmi jsou využity příslu
 
 Pro spuštění REST_API je potřeba mít v adresáři <code>git_rank/</code> vytvořený příslušný <code>.env</code> soubor alespoň s <code>GITHUB_ACCESS_TOKEN</code> proměnnou, případně ji do <code>docker-compose.yml</code> přidat manuálně.
 
+## Lokální instalace a spuštění
+
+Pro variantu lokální instalace a spuštění je detail popsán v příslušných <code>README.md</code> souborech v adresářích jednotlivých komponent (<code>git_rank/</code> a <code>www/</code>).
+
+Pro spuštění hodnoticí komponenty je potřeba mít nainstalovaný Python (alespoň 3.11) a pro webovou stránku Node.js (s npm). Popis instalace všech ostatních potřebných závislostí je součástí zmiňovaných README souborů.
+
 ## Dokumentace REST API
 
 Dokumentace jednotlivých dostupných REST API endpointů je po spuštění dostupná na endpointu <code>/docs</code>.
