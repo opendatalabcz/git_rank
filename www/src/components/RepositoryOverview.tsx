@@ -11,7 +11,7 @@ import stringHash from "string-hash";
 export default function RepositoryOverview({ repositoryStatistics }: {repositoryStatistics: IRepositoryStatistics}) {
     return (
         <>
-            <h2>Repository {repositoryStatistics.repository_name}</h2>
+            <h2 className="mt-4">Repository {repositoryStatistics.repository_name}</h2>
             <Table size="sm" striped>
                 <thead>
                     <tr>
@@ -36,8 +36,8 @@ export default function RepositoryOverview({ repositoryStatistics }: {repository
             <h3>Commits</h3>
             <p>Total commits: <b>{repositoryStatistics.total_commits}</b></p>
             <p>User commits: <b>{repositoryStatistics.user_commits}</b></p>
-            <Button color="secondary" id={"commit_toggler".concat(stringHash(repositoryStatistics.repository_name))}>Collapse user commits</Button>
-            <UncontrolledCollapse toggler={"#commit_toggler".concat(stringHash(repositoryStatistics.repository_name))}>
+            <Button color="secondary" id={"commit_toggler".concat(stringHash(repositoryStatistics.repository_name).toString())}>Collapse user commits</Button>
+            <UncontrolledCollapse toggler={"#commit_toggler".concat(stringHash(repositoryStatistics.repository_name).toString())}>
                 {/* https://github.com/reactstrap/reactstrap/issues/2785 */}
                 {/* @ts-expect-error Known Reactstrap issue */}
                 <UncontrolledAccordion stayOpen>
@@ -53,6 +53,7 @@ export default function RepositoryOverview({ repositoryStatistics }: {repository
                     ))}
                 </UncontrolledAccordion>
             </UncontrolledCollapse>
+            <hr/>
         </>
     )
 }

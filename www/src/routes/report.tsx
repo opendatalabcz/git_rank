@@ -22,7 +22,7 @@ export default function Report() {
   }
 
   return (
-  <Container fluid className="px-4 py-3">
+  <Container className="px-4 py-3">
     <UserOverview key={username} userStatistics={reportData}/>
   </Container>
   )
