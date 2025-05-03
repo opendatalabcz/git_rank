@@ -34,6 +34,7 @@ class JavaLinter(AbstractLinter):
                         text=True,
                     )
 
+                    # Return code 0 means no violations, 4 means found violations
                     if result.returncode != 0 and result.returncode != 4:
                         result.check_returncode()
 
