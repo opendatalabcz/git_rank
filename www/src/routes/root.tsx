@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Alert, Button, Card, CardBody, CardImg, CardText, CardTitle, Col, Container, Form, Input, Label, Row, Spinner } from "reactstrap"
 import axios from "axios"
 
@@ -43,6 +43,12 @@ export default function Root() {
     staleTime: 1000 * 60 * 10, // 10 minutes
     retry: false,
   })
+
+  useEffect(() => {
+    if (isError) {
+      setShouldFetch(false)
+    }
+  }, [isError])
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -90,10 +96,10 @@ export default function Root() {
     )}
 
     {isError && (
-      <Alert color="danger">
-        Error while getting report: {error.message}
-        <br/>
-        {error.stack}
+      <Alert color="danger" className="mt-3">
+        Error while getting report, please try again later.
+        <br />
+        Reason: {error.message}
       </Alert>
     )}
     <Card className="my-2 mt-4" color="light">

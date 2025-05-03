@@ -8,7 +8,7 @@ import {
 } from "react-router-dom"
 import Root from "./routes/root"
 import Report from "./routes/report"
-import { Button } from 'reactstrap'
+import { Button, Container } from 'reactstrap'
 
 function ErrorBoundary() {
   const navigate = useNavigate()
@@ -17,11 +17,11 @@ function ErrorBoundary() {
 
   if(isRouteErrorResponse(error)) {
     return (  
-      <div>
-        <h2>HTTP {error.status}</h2>
+      <Container className="px-2 py-3 text-center">
+        <h1>HTTP {error.status}</h1>
         <p>{error.data}</p>
-        <Button color="primary" onClick={() => navigate('/')}>Go to homepage</Button>
-      </div>
+        <Button color="primary" onClick={() => navigate('/')}>Back to homepage</Button>
+      </Container>
     )
   }
 }
