@@ -12,7 +12,7 @@ export default function RepositoryOverview({ repositoryStatistics }: {repository
     return (
         <>
             <h2 className="mt-4">Repository {repositoryStatistics.repository_name}</h2>
-            <Table size="sm" striped>
+            {repositoryStatistics.commits.length != 0 && <div><Table size="sm" striped>
                 <thead>
                     <tr>
                         <th>Technology</th>
@@ -32,11 +32,11 @@ export default function RepositoryOverview({ repositoryStatistics }: {repository
                 <TechnologiesBarChart technologies={repositoryStatistics.technologies}/>
                 <CommitsDateChart commits={repositoryStatistics.commits}/>
                 <LintScoreDateChart commits={repositoryStatistics.commits}/>
-            </div>
+            </div></div>}
             <h3>Commits</h3>
             <p>Total commits: <b>{repositoryStatistics.total_commits}</b></p>
             <p>User commits: <b>{repositoryStatistics.user_commits}</b></p>
-            <Button color="secondary" id={"commit_toggler".concat(stringHash(repositoryStatistics.repository_name).toString())}>Collapse user commits</Button>
+            {repositoryStatistics.commits.length != 0 && <div><Button color="secondary" id={"commit_toggler".concat(stringHash(repositoryStatistics.repository_name).toString())}>Collapse user commits</Button>
             <UncontrolledCollapse toggler={"#commit_toggler".concat(stringHash(repositoryStatistics.repository_name).toString())}>
                 {/* https://github.com/reactstrap/reactstrap/issues/2785 */}
                 {/* @ts-expect-error Known Reactstrap issue */}
@@ -53,6 +53,7 @@ export default function RepositoryOverview({ repositoryStatistics }: {repository
                     ))}
                 </UncontrolledAccordion>
             </UncontrolledCollapse>
+            </div>}
             <hr/>
         </>
     )
