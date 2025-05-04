@@ -45,6 +45,6 @@ linters:
   python:
     arguments: "--disable=E0401,I1101"
   java:
-    arguments: "-f json -R rulesets/java/quickstart.xml"
+    arguments: "-f json -R config/pmd_config.xml"
   cs:
     arguments: "--language cs --ignored-diagnostics CS0006 CS0012 CS0031 CS0103 CS0234 CS0246 CS1061 CS1069 CS1748" # Ignored diagnostics for missing imports and modules
