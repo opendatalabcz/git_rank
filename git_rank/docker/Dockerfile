@@ -48,16 +48,17 @@ RUN wget https://packages.microsoft.com/config/debian/12/packages-microsoft-prod
 # #Scripted install for dotnet
 # #replaces apt-get install -y dotnet-sdk-9.0 in case of processor architecture issues (MacOS)
 # #From https://learn.microsoft.com/en-us/dotnet/core/install/linux-scripted-manual#scripted-install
-# RUN wget https://dot.net/v1/dotnet-install.sh -O dotnet-install.sh --install-dir /usr/local \
+# RUN wget https://dot.net/v1/dotnet-install.sh -O dotnet-install.sh \
 # && chmod +x ./dotnet-install.sh \
-# && ./dotnet-install.sh --channel 9.0 --version latest \
+# && ./dotnet-install.sh --channel 9.0 --version latest --install-dir /usr/local/dotnet \
 # && rm ./dotnet-install.sh 
-# ENV DOTNET_ROOT=/usr/local/.dotnet
-# ENV PATH=$PATH:~$DOTNET_ROOT
+# ENV DOTNET_ROOT=/usr/local/dotnet
+# ENV PATH=$PATH:$DOTNET_ROOT
 # RUN dotnet tool install roslynator.dotnet.cli --version ${ROSLYNATOR_VERSION} --tool-path /usr/local/bin
 
 COPY --from=builder /runtime /usr/local
 COPY . /app
+WORKDIR /app
 
 RUN useradd -r -m git_rank_service && \
   chown -R git_rank_service /app
