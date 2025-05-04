@@ -40,12 +40,16 @@ class CSLinter(AbstractLinter):
                 with open(tmp_commit_file.name, "r") as f:
                     lines = sum(1 for _ in f)
 
-                    subprocess.run(
+                    result = subprocess.run(
                         f"roslynator analyze {self.arguments} -o {OUTPUT_XML_FILE}",
                         shell=True,
                         capture_output=False,
                         cwd=tmp_dir,
-                    ).check_returncode()
+                    )
+
+                # Return code 0 means no violations, 1 means found violations
+                if result.returncode != 0 and result.returncode != 1:
+                    result.check_returncode()
 
                 if os.path.exists(os.path.join(tmp_dir, OUTPUT_XML_FILE)):
                     with open(os.path.join(tmp_dir, OUTPUT_XML_FILE), "r") as r:
