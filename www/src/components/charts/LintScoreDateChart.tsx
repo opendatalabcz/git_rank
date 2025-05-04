@@ -9,13 +9,21 @@ export default function LintScoreDateChart({ commits }: {commits: ICommitStatist
         {
           x: commit.commit_date,
           y: commit.average_add_lint_score?.toFixed(2)
-        }))
+        })).sort((a, b) => {
+          const dateA = new Date(a.x).getTime();
+          const dateB = new Date(b.x).getTime();
+          return dateA - dateB;
+        })
     const change_lint = commits.filter(commit => commit.average_change_lint_score != null).map(
       commit => (
         {
           x: commit.commit_date,
           y: commit.average_change_lint_score?.toFixed(2)
-        }))
+        })).sort((a, b) => {
+          const dateA = new Date(a.x).getTime();
+          const dateB = new Date(b.x).getTime();
+          return dateA - dateB;
+        })
 
     const series = [
         {name: "ADDED", data: add_lint},
