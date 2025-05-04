@@ -11,6 +11,7 @@ cli = typer.Typer(name="git_rank", add_completion=False)
 
 
 def create_application_container() -> ApplicationContainer:
+    check_linters()
     application_container = ApplicationContainer()
     application_container.init_resources()
     return application_container
@@ -27,6 +28,21 @@ def create_application(application_container: ApplicationContainer) -> FastAPI:
     )
     fast_api.include_router(api.router)
     return fast_api
+
+
+def check_linters() -> None:
+    """Check if the linters are installed and available in the system."""
+    try:
+        import subprocess
+
+        subprocess.run(
+            "pmd --version && roslynator --version",
+            shell=True,
+            capture_output=True,
+            text=True,
+        ).check_returncode()
+    except subprocess.CalledProcessError:
+        raise ImportError("Linters not available. Please check your setup to use the linters.")
 
 
 @cli.command()
