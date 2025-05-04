@@ -78,14 +78,8 @@ class StatisticsAnalyzer:
             ],
             [],
         )
-        cross_repository_statistics.technologies = self._aggregate_technology_statistics(
-            sum(
-                [
-                    user_repository_statistics.technologies
-                    for user_repository_statistics in user_repositories_statistics
-                ],
-                [],
-            )
+        cross_repository_statistics.technologies = self._analyze_technologies(
+            cross_repository_statistics.commits
         )
 
         return cross_repository_statistics
@@ -206,34 +200,3 @@ class StatisticsAnalyzer:
             if total
             else None
         )
-
-    def _aggregate_technology_statistics(
-        self, cross_repository_technology_statistics: list[TechnologyStatistics]
-    ) -> list[TechnologyStatistics]:
-        """
-        Aggregates the technology statistics based on the technology type.
-        """
-        technology_statistics: dict[TechnologyType, TechnologyStatistics] = {}
-        for technology in cross_repository_technology_statistics:
-            technology_statistic = technology_statistics.get(technology.technology)
-            if technology_statistic:
-                technology_statistics[technology.technology] = TechnologyStatistics(
-                    technology=technology.technology,
-                    total_changes=technology_statistic.total_changes + technology.total_changes,
-                    first_used_date=min(
-                        technology_statistic.first_used_date, technology.first_used_date
-                    ),
-                    last_used_date=max(
-                        technology_statistic.last_used_date, technology.last_used_date
-                    ),
-                    weeks_used=technology_statistic.weeks_used + technology.weeks_used,
-                )
-            else:
-                technology_statistics[technology.technology] = TechnologyStatistics(
-                    technology=technology.technology,
-                    total_changes=technology.total_changes,
-                    first_used_date=technology.first_used_date,
-                    last_used_date=technology.last_used_date,
-                    weeks_used=technology.weeks_used,
-                )
-        return list(technology_statistics.values())
