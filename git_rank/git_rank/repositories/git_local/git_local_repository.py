@@ -17,6 +17,12 @@ class GitLocalRepository:
         Returns:
             LocalRepository: The cloned local repository.
         """
+        if os.path.exists(
+            os.path.join(STORAGE_DIR, remote_repository.user.username, remote_repository.full_name)
+        ):
+            raise FileExistsError(
+                f"Repository {remote_repository.full_name} already exists in {STORAGE_DIR}"
+            )
         repo = LocalRepository(
             repository=Repo.clone_from(
                 url=remote_repository.clone_url,

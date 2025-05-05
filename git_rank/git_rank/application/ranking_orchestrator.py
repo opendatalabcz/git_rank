@@ -43,10 +43,11 @@ class RankingOrchestrator:
         repositories_statistics: list[RepositoryStatistics] = []
         cross_repositories_statistics: RepositoryStatistics | None = None
 
+        local_repositories: list[LocalRepository] = self.repository_cloner.clone_repositories(
+            username
+        )
+
         try:
-            local_repositories: list[LocalRepository] = self.repository_cloner.clone_repositories(
-                username
-            )
             for local_repository in local_repositories:
                 log.info("rank_user.rank_repository.start", repository=local_repository.full_name)
 
@@ -62,7 +63,6 @@ class RankingOrchestrator:
             )
         except:
             log.exception("rank_user.error")
-            # TODO Custom Exceptions
             raise Exception("Error while ranking user")
         finally:
             self.repository_cleaner.remove_repositories_by_user(username)

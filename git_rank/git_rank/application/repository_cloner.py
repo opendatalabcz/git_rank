@@ -1,5 +1,6 @@
 from structlog import get_logger
 
+from git_rank.exceptions.ranking_exceptions import RankingAlreadyRunningException
 from git_rank.models.local_repository import LocalRepository
 from git_rank.services.git_local_service import GitLocalService
 from git_rank.services.git_remote_service import GitRemoteService
@@ -29,8 +30,14 @@ class RepositoryCloner:
 
         remote_repositories = self.git_remote_service.get_user_repositories(username)
         local_repositories = []
-        for remote_repository in remote_repositories:
-            local_repositories.append(self.git_local_service.clone_repository(remote_repository))
+        try:
+            for remote_repository in remote_repositories:
+                local_repositories.append(
+                    self.git_local_service.clone_repository(remote_repository)
+                )
+        except FileExistsError as e:
+            log.exception("clone_repositories.file_exists_error")
+            raise RankingAlreadyRunningException
 
         log.debug("clone_repositories.end")
         return local_repositories

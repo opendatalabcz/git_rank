@@ -1,10 +1,11 @@
 from dependency_injector.wiring import Provide, inject
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException
 from pydantic import HttpUrl
 from structlog import get_logger
 
 from git_rank.application.ranking_orchestrator import RankingOrchestrator
 from git_rank.containers.ranking_orchestrator_container import RankingOrchestratorContainer
+from git_rank.exceptions.ranking_exceptions import RankingAlreadyRunningException
 from git_rank.models.statistics.user_statistics import UserStatistics
 
 router = APIRouter()
@@ -20,8 +21,13 @@ def rank_user(
         Provide[RankingOrchestratorContainer.ranking_orchestrator]
     ),
 ) -> UserStatistics:
-
-    return ranking_orchestrator.rank_user(username)
+    try:
+        return ranking_orchestrator.rank_user(username)
+    except RankingAlreadyRunningException as e:
+        raise HTTPException(
+            status_code=409,
+            detail=f"Ranking already running for user {username}. Please try again later.",
+        ) from e
 
 
 @router.get("/rank/{username}/repository")
@@ -33,10 +39,15 @@ def rank_repository(
         Provide[RankingOrchestratorContainer.ranking_orchestrator]
     ),
 ) -> UserStatistics:
-
-    return ranking_orchestrator.rank_user_repository(
-        username=username, repository_url=str(repository_url)
-    )
+    try:
+        return ranking_orchestrator.rank_user_repository(
+            username=username, repository_url=str(repository_url)
+        )
+    except RankingAlreadyRunningException as e:
+        raise HTTPException(
+            status_code=409,
+            detail=f"Ranking already running for user {username} and repository {repository_url}. Please try again later.",
+        ) from e
 
 
 @router.get("/status")

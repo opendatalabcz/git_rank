@@ -58,7 +58,6 @@ class GithubRemoteRepository(AbstractGitRemoteRepository):
                     status_code=repositories_page.status_code,
                     reason=repositories_page.reason,
                 )
-                # TODO Custom Exceptions
                 raise Exception("Error fetching user repositories")
 
             repositories_page_json = repositories_page.json()
@@ -110,7 +109,6 @@ class GithubRemoteRepository(AbstractGitRemoteRepository):
                 status_code=user_data.status_code,
                 reason=user_data.reason,
             )
-            # TODO Custom Exceptions
             raise Exception("Error fetching user data")
 
         user_data_json: dict[str, Any] = user_data.json()
