@@ -36,6 +36,10 @@ install:
 pre-commit-install:
 	poetry run pre-commit install
 
+.PHONY: pylint-install
+pylint-install:
+	poetry run pip install pylint
+
 .PHONY: pmd-install
 pmd-install:
 	cd $(HOME)
@@ -49,7 +53,7 @@ roslynator-install:
 	dotnet tool install -g roslynator.dotnet.cli --version 0.10.1
 
 .PHONY: linters-install
-linters-install: pmd-install roslynator-install
+linters-install: pylint-install pmd-install roslynator-install
 
 # Formatters
 .PHONY: codestyle

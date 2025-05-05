@@ -25,9 +25,10 @@ def test_lint_commit_file(
     )
 
     result = java_linter_fixture.lint_commit_file(commit=commit_fixture, file="test.java")
+
+    assert result != 10 and result != 0.0
     subprocess_run_mock.assert_called_once()
     assert "pmd check" in subprocess_run_mock.call_args[0][0]
-    assert result != 10 and result != 0.0
 
 
 @patch("git_rank.services.linters.java_linter.subprocess.run")

@@ -36,7 +36,7 @@ def check_linters() -> None:
         import subprocess
 
         subprocess.run(
-            "pmd --version && roslynator --version",
+            "pylint --version && pmd --version && roslynator --version",
             shell=True,
             capture_output=True,
             text=True,
