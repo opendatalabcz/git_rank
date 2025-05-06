@@ -8,9 +8,13 @@
 
 </div>
 
+## Co je GitRank?
+
 GitRank je software sloužící k analýze a hodnocení uživatelské práce ve veřejných repozitářích (aktuálně z platformy GitHub) a následnému zobrazování výsledných reportů.
 
 Poskytuje tak vhled na dovednosti a návyky vývojářů, které nemusí být na první pohled patrné.
+
+GitRank vznikl jako diplomová práce na Fakultě informačních technologií ČVUT ve spolupráci s OpenDataLab.
 
 ## Struktura projektu
 
