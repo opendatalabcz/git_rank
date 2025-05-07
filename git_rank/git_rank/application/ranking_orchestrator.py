@@ -88,10 +88,11 @@ class RankingOrchestrator:
 
         repositories_statistics: list[RepositoryStatistics] = []
 
+        local_repository: LocalRepository = self.repository_cloner.clone_user_repository(
+            username=username, repository_url=repository_url
+        )
+
         try:
-            local_repository: LocalRepository = self.repository_cloner.clone_user_repository(
-                username=username, repository_url=repository_url
-            )
             repositories_statistics.append(
                 self.statistics_analyzer.analyze_repository_statistics(local_repository)
             )
