@@ -3,50 +3,43 @@
 <div align="center">
 
 [![Build status](https://github.com/opendatalabcz/git_rank/workflows/build/badge.svg?branch=master&event=push)](https://github.com/opendatalabcz/git_rank/actions?query=workflow%3Abuild)
-![Coverage Report](assets/images/coverage.svg)
-
-[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![Pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/opendatalabcz/git_rank/blob/master/.pre-commit-config.yaml)
 [![License](https://img.shields.io/github/license/opendatalabcz/git_rank)](https://github.com/opendatalabcz/git_rank/blob/master/LICENSE)
 
 </div>
 
-## Instalace
+## Co je GitRank?
 
-1. Pokud nemáte nainstalované `Poetry`:
+GitRank je software sloužící k analýze a hodnocení uživatelské práce ve veřejných repozitářích (aktuálně z platformy GitHub) a následnému zobrazování výsledných reportů.
 
-```bash
-make poetry-download
-```
+Poskytuje tak vhled na dovednosti a návyky vývojářů, které nemusí být na první pohled patrné.
 
-nebo
+GitRank vznikl jako diplomová práce na Fakultě informačních technologií ČVUT ve spolupráci s OpenDataLab.
 
-```bash
-pip install poetry
-```
+## Struktura projektu
 
-2. Instalace závislostí pomocí Poetry:
+### git_rank
 
-```bash
-make install
-```
+Obashuje samotnou rankovací aplikaci. Je napsána v Pythonu za pomocí FastAPI a je koncipována jako REST API. Generuje reporty v JSON formátu.
 
-3. Spuštění projektu:
+### www
 
-```bash
-./entrypoint.sh
-```
+Obsahuje přidruženou webovou stránku, pomocí které je možné Git Rank REST API zavolat, počkat na vygenerování JSON reportu, který webová stránka zobrazí v čitelnější podobě společně s dalšími vizualizacemi v podobě grafů.
 
-## Proměnné prostředí (ENV)
+## Spuštění projektu
 
-Pro spuštění je potřeba mít definované následující proměnné prostředí (ve sloupci "Hodnota" jsou typické ukázkové hodnoty):
+Pro spuštění obou částí projektu je doporučeno využít připravený <code>docker-compose.yml</code>.
 
-| Proměnná | Hodnota |
-| :------- | :------ |
-| SERVER_HOST | localhost |
-| SERVER_PORT | 8090      |
-| GITHUB_ACCESS_TOKEN | ghp_xyz |
+Pro sestavení images se všemi potřebnými závislostmi jsou využity příslušné <code>Dockerfile</code> uvnitř <code>www/docker</code> a <code>git_rank/docker</code> adresářů.
 
-## Template
+Pro spuštění REST_API je potřeba mít v adresáři <code>git_rank/</code> vytvořený příslušný <code>.env</code> soubor alespoň s <code>GITHUB_ACCESS_TOKEN</code> proměnnou, případně ji do <code>docker-compose.yml</code> přidat manuálně.
 
-Základní kostra projektu byla vygenerována z [python-package-template](https://github.com/TezRomacH/python-package-template).
+## Lokální instalace a spuštění
+
+Pro variantu lokální instalace a spuštění je detail popsán v příslušných <code>README.md</code> souborech v adresářích jednotlivých komponent (<code>git_rank/</code> a <code>www/</code>).
+
+Pro spuštění hodnoticí komponenty je potřeba mít nainstalovaný Python (alespoň 3.11) a pro webovou stránku Node.js (s npm). Popis instalace všech ostatních potřebných závislostí je součástí zmiňovaných README souborů.
+
+## Dokumentace REST API
+
+Dokumentace jednotlivých dostupných REST API endpointů je po spuštění dostupná na endpointu <code>/docs</code>.

@@ -1,0 +1,67 @@
+name: build
+
+on: [push, pull_request]
+
+jobs:
+  lint_git_rank:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: git_rank
+    strategy:
+      matrix:
+        python-version: ["3.11"]
+
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ matrix.python-version }}
+
+    - name: Install poetry
+      run: make poetry-download
+
+    - name: Set up cache
+      uses: actions/cache@v4
+      with:
+        path: git_rank/.venv
+        key: venv-${{ matrix.python-version }}-${{ hashFiles('git_rank/pyproject.toml') }}-${{ hashFiles('git_rank/poetry.lock') }}
+    
+    - name: Install dependencies
+      run: |
+        poetry config virtualenvs.in-project true
+        make install
+
+    - name: Run lint
+      run: make lint
+    
+  lint_git_rank_www:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: www
+    strategy:
+      matrix:
+        node-version: ["23.x"]
+    
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+
+    - name: Set up cache
+      uses: actions/cache@v4
+      with:
+        path: www/node_modules
+        key: node_modules-${{ matrix.node-version }}-${{ hashFiles('www/package.json') }}-${{ hashFiles('www/package-lock.json') }}
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Run lint
+      run: npm run lint

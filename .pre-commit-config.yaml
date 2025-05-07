@@ -9,12 +9,19 @@ repos:
     hooks:
       - id: check-yaml
       - id: end-of-file-fixer
-        exclude: LICENSE
+        exclude: '^(?!git_rank/)'
 
   - repo: local
     hooks:
-      - id: codestyle
-        name: Check codestyle
-        entry: make check-codestyle
+      - id: git_rank_codestyle
+        name: Check Git Rank codestyle
+        entry: bash -c 'cd git_rank && make check-codestyle'
         types: [python]
+        language: system
+
+  - repo: local
+    hooks:
+      - id: www_codestyle
+        name: Check Git Rank WWW codestyle
+        entry: bash -c 'cd www && npm run lint'
         language: system

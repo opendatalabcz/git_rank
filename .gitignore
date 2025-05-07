@@ -1,27 +1,3 @@
-# IntelliJ IDEA files
-.idea
-
-# Private env files
-.env
-api_requests/*private*
-api_requests/.env
-
-# Storage directory for cloned repositories
-storage
-
-# Python virtual environment directory
+.vscode
 .venv
-
-# Unit test / coverage 
-htmlcov/
-.tox/
-.nox/
-.coverage
-.coverage.*
-.cache
-nosetests.xml
-coverage.xml
-*.cover
-.hypothesis/
-.pytest_cache/
-__pycache__
+.DS_Store
