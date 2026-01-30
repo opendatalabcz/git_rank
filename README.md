@@ -43,3 +43,10 @@ Pro spuštění hodnoticí komponenty je potřeba mít nainstalovaný Python (al
 ## Dokumentace REST API
 
 Dokumentace jednotlivých dostupných REST API endpointů je po spuštění dostupná na endpointu <code>/docs</code>.
+
+***
+<img src="https://fit.cvut.cz/static/images/fit-cvut-logo-cs.svg" alt="logo FIT ČVUT" height="200">
+
+Tento software vznikl za podpory **Fakulty informačních technologií ČVUT v Praze**.
+Více informací naleznete na [fit.cvut.cz](https://fit.cvut.cz).
+Otevřený repozitář naleznete na [https://github.com/opendatalabcz/git_rank](https://github.com/opendatalabcz/git_rank).
